@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		44BF23AF1CB4AB350043D8DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23AE1CB4AB350043D8DD /* main.m */; };
 		44BF23B61CB4AC160043D8DD /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23B51CB4AC160043D8DD /* AppController.m */; };
+		44BF23B91CB4DA690043D8DD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23B81CB4DA690043D8DD /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,7 @@
 		44BF23AE1CB4AB350043D8DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		44BF23B51CB4AC160043D8DD /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		44BF23B71CB4AC3C0043D8DD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		44BF23B81CB4DA690043D8DD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 		44BF23A21CB4AB350043D8DD = {
 			isa = PBXGroup;
 			children = (
+				44BF23B81CB4DA690043D8DD /* README.md */,
 				44BF23AD1CB4AB350043D8DD /* jsonscan */,
 				44BF23AC1CB4AB350043D8DD /* Products */,
 			);
@@ -123,6 +126,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44BF23B91CB4DA690043D8DD /* README.md in Sources */,
 				44BF23AF1CB4AB350043D8DD /* main.m in Sources */,
 				44BF23B61CB4AC160043D8DD /* AppController.m in Sources */,
 			);

@@ -23,6 +23,8 @@
 
     mDeviceTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(noDevicesFound:) userInfo:nil repeats:NO];
     
+    CFRunLoopRun();
+    
 }
 
 - (void)parseJSON:(NSString*)jsonString
@@ -63,12 +65,16 @@
         [mScanners addObject:addedDevice];
         addedDevice.delegate = self;
         NSLog(@"%@", [addedDevice name]);
-        
+        NSLog(@"%@", [addedDevice capabilities]);
     }
     
     if (!moreComing) {
         NSLog(@"All devices have been added.");
-        [self exit];
+        if ([_configuration[@"action"] isEqualToString:@"list"]) {
+            [self exit];
+        } else {
+            [self openCloseSession:nil];
+        }
     }
     
 }
@@ -77,6 +83,28 @@
 {
     
     
+}
+
+- (IBAction)openCloseSession:(id)sender
+{
+    if ( [self selectedScanner].hasOpenSession )
+        [[self selectedScanner] requestCloseSession];
+    else
+        [[self selectedScanner] requestOpenSession];
+}
+
+- (ICScannerDevice*)selectedScanner
+{
+    // TODO: pick the right scanner via name in _configuration.
+    for (ICScannerDevice *scanner in mScanners) {
+        
+        // if [scanner name] isEqualToString ....
+        return scanner; // TODO: don't pick the first one in future.
+        
+    }
+
+    [self exit];
+    return nil;
 }
 
 - (void)didRemoveDevice:(ICDevice*)removedDevice

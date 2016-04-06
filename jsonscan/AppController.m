@@ -37,7 +37,7 @@
     _configuration = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
     
     if (_configuration == nil) {
-        NSLog(@"{\"repsonse\": \"%@\", \"error\": \"true\"}", [error localizedDescription]);
+        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
         [self exit];
     }
     
@@ -52,7 +52,7 @@
 
 - (void)noDevicesFound:(NSTimer*)theTimer
 {
-    NSLog(@"{\"repsonse\": \"No scanners found.\", \"error\": \"true\"}");
+    NSLog(@"{\"repsonse\": \"completed\", \"message\": \"No scanners found.\"}");
     [self exit];
 }
 
@@ -72,12 +72,11 @@
         }
         [mScanners addObject:addedDevice];
         addedDevice.delegate = self;
-        NSLog(@"%@", [addedDevice name]);
-        NSLog(@"%@", [addedDevice capabilities]);
+        NSLog(@"{\"repsonse\": \"found\", \"name\": \"%@\"}", [addedDevice name]);
     }
     
     if (!moreComing) {
-        NSLog(@"All devices have been added.");
+        NSLog(@"{\"repsonse\": \"completed\", \"message\": \"All devices have been added.\"}");
         if ([_configuration[@"action"] isEqualToString:@"list"]) {
             [self exit];
         } else {
@@ -124,7 +123,7 @@
 
 - (void)device:(ICDevice*)device didCloseSessionWithError:(NSError*)error
 {
-    NSLog(@"device:didCloseSessionWithError: %@\n", [error localizedDescription]);
+    NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
 }
 
 - (void)deviceDidChangeName:(ICDevice*)device;
@@ -137,21 +136,19 @@
 
 - (void)device:(ICDevice*)device didReceiveStatusInformation:(NSDictionary*)status
 {
-    NSLog( @"device: \n%@\ndidReceiveStatusInformation: \n%@\n", device, status );
-    
     if ( [[status objectForKey:ICStatusNotificationKey] isEqualToString:ICScannerStatusWarmingUp] )
     {
-        NSLog(@"Scanner warming up...");
+        NSLog(@"{\"repsonse\": \"status\", \"message\": \"%@\"}", @"Scanner warming up...");
     }
     else if ( [[status objectForKey:ICStatusNotificationKey] isEqualToString:ICScannerStatusWarmUpDone] )
     {
-        NSLog(@"Scanner done warming up.");
+        NSLog(@"{\"repsonse\": \"status\", \"message\": \"%@\"}", @"Scanner done warming up.");
     }
 }
 
 - (void)device:(ICDevice*)device didEncounterError:(NSError*)error
 {
-    NSLog( @"device: \n%@\ndidEncounterError: \n%@\n", device, error );
+    NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
 }
 
 - (void)device:(ICDevice*)device didReceiveButtonPress:(NSString*)button
@@ -237,13 +234,13 @@
 
 - (void)device:(ICDevice*)device didOpenSessionWithError:(NSError*)error
 {
-    NSLog( @"device:didOpenSessionWithError: %@\n", error );
+    NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
     [self selectFunctionalUnit:0];
 }
 
 - (void)scannerDevice:(ICScannerDevice*)scanner didScanToURL:(NSURL*)url data:(NSData*)data
 {
-    NSLog(@"Scan complete.");
+    NSLog(@"{\"repsonse\": \"completed\", \"message\": \"Scan complete.\"}");
     [mScannedDestinationURLs addObject:url];
 }
 

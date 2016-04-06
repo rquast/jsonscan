@@ -30,6 +30,7 @@
 		44BF23B51CB4AC160043D8DD /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		44BF23B71CB4AC3C0043D8DD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		44BF23B81CB4DA690043D8DD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		44BF23BA1CB4DD690043D8DD /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +50,7 @@
 				44BF23B81CB4DA690043D8DD /* README.md */,
 				44BF23AD1CB4AB350043D8DD /* jsonscan */,
 				44BF23AC1CB4AB350043D8DD /* Products */,
+				44BF23BA1CB4DD690043D8DD /* LICENSE */,
 			);
 			sourceTree = "<group>";
 		};
@@ -249,6 +251,7 @@
 				44BF23B41CB4AB350043D8DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

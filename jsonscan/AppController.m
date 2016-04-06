@@ -11,6 +11,10 @@
     
     [self parseJSON:inputString];
     
+    if (_configuration == nil) {
+        return;
+    }
+    
     mScanners = [[NSMutableArray alloc] initWithCapacity:0];
     
     mDeviceBrowser = [[ICDeviceBrowser alloc] init];

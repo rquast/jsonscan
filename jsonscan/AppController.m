@@ -32,10 +32,9 @@
     NSError * error = nil;
     _configuration = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
     
-    if (_configuration != nil) {
+    if (_configuration == nil) {
         NSLog(@"{\"repsonse\": \"%@\", \"error\": \"true\"}", [error localizedDescription]);
         [self exit];
-        return;
     }
     
 }

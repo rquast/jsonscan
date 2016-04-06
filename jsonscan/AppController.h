@@ -16,6 +16,7 @@
 
 - (void)exec:(NSString*)inputString;
 - (void)parseJSON:(NSString*)jsonString;
+- (NSString*)serializeJSON:(NSDictionary*)dictionary;
 
 // ICDeviceBrowser delegate methods
 - (void)deviceBrowser:(ICDeviceBrowser*)browser didAddDevice:(ICDevice*)addedDevice moreComing:(BOOL)moreComing;

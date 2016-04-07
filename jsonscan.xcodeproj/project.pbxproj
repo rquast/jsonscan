@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		44BF23AF1CB4AB350043D8DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23AE1CB4AB350043D8DD /* main.m */; };
 		44BF23B61CB4AC160043D8DD /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23B51CB4AC160043D8DD /* AppController.m */; };
-		44BF23B91CB4DA690043D8DD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23B81CB4DA690043D8DD /* README.md */; };
 		44BF23BD1CB60C110043D8DD /* JsonConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23BC1CB60C110043D8DD /* JsonConfiguration.m */; };
 /* End PBXBuildFile section */
 
@@ -134,7 +133,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				44BF23BD1CB60C110043D8DD /* JsonConfiguration.m in Sources */,
-				44BF23B91CB4DA690043D8DD /* README.md in Sources */,
 				44BF23AF1CB4AB350043D8DD /* main.m in Sources */,
 				44BF23B61CB4AC160043D8DD /* AppController.m in Sources */,
 			);
@@ -180,7 +178,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -218,7 +216,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};

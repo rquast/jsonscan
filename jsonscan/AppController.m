@@ -7,11 +7,11 @@
 - (void)exec:(NSString*)inputString
 {
     
-    configuration = [[JsonConfiguration alloc] init];
+    mConfiguration = [[JsonConfiguration alloc] init];
     
-    [configuration parseJSON:inputString];
+    [mConfiguration parseJSON:inputString];
     
-    if (configuration.action == nil) {
+    if (mConfiguration.action == nil) {
         [self exit];
         return;
     }
@@ -52,13 +52,13 @@
         }
         [mScanners addObject:addedDevice];
         addedDevice.delegate = self;
-        if ([configuration.action[@"action"] isEqualToString:@"list"]) {
+        if ([mConfiguration.action[@"action"] isEqualToString:@"list"]) {
             NSLog(@"{\"repsonse\": \"found\", \"name\": \"%@\"}", [addedDevice name]);
         }
     }
     
     if (!moreComing) {
-        if ([configuration.action[@"action"] isEqualToString:@"list"]) {
+        if ([mConfiguration.action[@"action"] isEqualToString:@"list"]) {
             NSLog(@"{\"repsonse\": \"status\", \"message\": \"All devices have been listed.\"}");
             [self exit];
         } else {
@@ -85,9 +85,9 @@
 
     for (ICScannerDevice *scanner in mScanners) {
         
-        if (![[configuration.action allKeys] containsObject:@"device-name"]) {
+        if (![[mConfiguration.action allKeys] containsObject:@"device-name"]) {
             return scanner;
-        } else if ([configuration.action[@"device-name"] isEqualToString:[scanner name]]) {
+        } else if ([mConfiguration.action[@"device-name"] isEqualToString:[scanner name]]) {
             return scanner;
         }
         
@@ -208,10 +208,10 @@
     // TODO: choose either flatbed or document feeder from config.
     for (ICScannerDevice *scanner in mScanners) {
         
-        if (![[configuration.action allKeys] containsObject:@"device-name"]) {
+        if (![[mConfiguration.action allKeys] containsObject:@"device-name"]) {
             [scanner requestSelectFunctionalUnit:(ICScannerFunctionalUnitType) ICScannerFunctionalUnitTypeDocumentFeeder];
             return;
-        } else if ([configuration.action[@"device-name"] isEqualToString:[scanner name]]) {
+        } else if ([mConfiguration.action[@"device-name"] isEqualToString:[scanner name]]) {
             [scanner requestSelectFunctionalUnit:(ICScannerFunctionalUnitType) ICScannerFunctionalUnitTypeDocumentFeeder];
             return;
         }

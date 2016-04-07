@@ -6,7 +6,7 @@
 @interface AppController : NSObject <ICDeviceBrowserDelegate, ICScannerDeviceDelegate>
 {
     
-    JsonConfiguration*              configuration;
+    JsonConfiguration*              mConfiguration;
     
     ICDeviceBrowser*                mDeviceBrowser;
     NSMutableArray*                 mScanners;

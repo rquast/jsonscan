@@ -34,7 +34,7 @@
 
 - (void)noDevicesFound:(NSTimer*)theTimer
 {
-    NSLog(@"{\"repsonse\": \"completed\", \"message\": \"No scanners found.\"}");
+    NSLog(@"{\"repsonse\": \"status\", \"message\": \"No scanners found.\"}");
     [self exit];
 }
 
@@ -54,12 +54,14 @@
         }
         [mScanners addObject:addedDevice];
         addedDevice.delegate = self;
-        NSLog(@"{\"repsonse\": \"found\", \"name\": \"%@\"}", [addedDevice name]);
+        if ([configuration.action[@"action"] isEqualToString:@"list"]) {
+            NSLog(@"{\"repsonse\": \"found\", \"name\": \"%@\"}", [addedDevice name]);
+        }
     }
     
     if (!moreComing) {
-        NSLog(@"{\"repsonse\": \"completed\", \"message\": \"All devices have been listed.\"}");
         if ([configuration.action[@"action"] isEqualToString:@"list"]) {
+            NSLog(@"{\"repsonse\": \"status\", \"message\": \"All devices have been listed.\"}");
             [self exit];
         } else {
             [self openCloseSession:nil];
@@ -226,7 +228,7 @@
 
 - (void)scannerDevice:(ICScannerDevice*)scanner didScanToURL:(NSURL*)url data:(NSData*)data
 {
-    NSLog(@"{\"repsonse\": \"completed\", \"message\": \"Scan complete.\"}");
+    NSLog(@"{\"repsonse\": \"status\", \"message\": \"Scan complete.\"}");
     [mScannedDestinationURLs addObject:url];
 }
 

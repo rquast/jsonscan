@@ -10,7 +10,6 @@
     
     ICDeviceBrowser*                mDeviceBrowser;
     NSMutableArray*                 mScanners;
-    NSMutableArray*                 mScannedDestinationURLs;
     
     NSTimer*                        mDeviceTimer;
 }

@@ -82,16 +82,20 @@
 
 - (ICScannerDevice*)selectedScanner
 {
-    // TODO: pick the right scanner via name in _configuration.
+
     for (ICScannerDevice *scanner in mScanners) {
         
-        // if [scanner name] isEqualToString ....
-        return scanner; // TODO: don't pick the first one in future.
+        if (![[configuration.action allKeys] containsObject:@"device-name"]) {
+            return scanner;
+        } else if ([configuration.action[@"device-name"] isEqualToString:[scanner name]]) {
+            return scanner;
+        }
         
     }
 
     [self exit];
     return nil;
+    
 }
 
 - (void)didRemoveDevice:(ICDevice*)removedDevice

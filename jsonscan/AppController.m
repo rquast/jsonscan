@@ -4,8 +4,6 @@
 
 @implementation AppController
 
-@synthesize scanners = mScanners;
-
 - (void)exec:(NSString*)inputString
 {
     
@@ -126,13 +124,10 @@
 
 - (void)device:(ICDevice*)device didReceiveStatusInformation:(NSDictionary*)status
 {
-    if ( [[status objectForKey:ICStatusNotificationKey] isEqualToString:ICScannerStatusWarmingUp] )
-    {
-        NSLog(@"{\"repsonse\": \"status\", \"message\": \"%@\"}", @"Scanner warming up...");
-    }
-    else if ( [[status objectForKey:ICStatusNotificationKey] isEqualToString:ICScannerStatusWarmUpDone] )
-    {
-        NSLog(@"{\"repsonse\": \"status\", \"message\": \"%@\"}", @"Scanner done warming up.");
+    if ( [[status objectForKey:ICStatusNotificationKey] isEqualToString:ICScannerStatusWarmingUp] ) {
+        NSLog(@"{\"repsonse\": \"status\", \"message\": \"Scanner warming up...\"}");
+    } else if ( [[status objectForKey:ICStatusNotificationKey] isEqualToString:ICScannerStatusWarmUpDone] ) {
+        NSLog(@"{\"repsonse\": \"status\", \"message\": \"Scanner done warming up.\"}");
     }
 }
 
@@ -161,11 +156,22 @@
 
 - (void)scannerDevice:(ICScannerDevice*)scanner didCompleteOverviewScanWithError:(NSError*)error;
 {
+    
+    if (error != nil) {
+        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+    }
+    
+    [self exit];
+    
 }
 
 - (void)scannerDevice:(ICScannerDevice*)scanner didCompleteScanWithError:(NSError*)error;
 {
 
+    if (error != nil) {
+        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+    }
+    
     [self exit];
     
 }

@@ -12,9 +12,8 @@
     NSMutableArray*                 mScanners;
     
     NSTimer*                        mDeviceTimer;
+    
 }
-
-@property(strong)                   NSMutableArray*     scanners;
 
 - (void)exec:(NSString*)inputString;
 

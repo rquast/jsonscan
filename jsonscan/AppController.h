@@ -1,8 +1,12 @@
 #import <Cocoa/Cocoa.h>
 #import <ImageCaptureCore/ImageCaptureCore.h>
 
+#import "JsonConfiguration.h"
+
 @interface AppController : NSObject <ICDeviceBrowserDelegate, ICScannerDeviceDelegate>
 {
+    
+    JsonConfiguration*              configuration;
     
     ICDeviceBrowser*                mDeviceBrowser;
     NSMutableArray*                 mScanners;
@@ -12,11 +16,8 @@
 }
 
 @property(strong)                   NSMutableArray*     scanners;
-@property(strong)                   NSDictionary*       configuration;
 
 - (void)exec:(NSString*)inputString;
-- (void)parseJSON:(NSString*)jsonString;
-- (NSString*)serializeJSON:(NSDictionary*)dictionary;
 
 // ICDeviceBrowser delegate methods
 - (void)deviceBrowser:(ICDeviceBrowser*)browser didAddDevice:(ICDevice*)addedDevice moreComing:(BOOL)moreComing;

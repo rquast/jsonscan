@@ -9,9 +9,12 @@
 - (void)exec:(NSString*)inputString
 {
     
-    [self parseJSON:inputString];
+    configuration = [[JsonConfiguration alloc] init];
     
-    if (_configuration == nil) {
+    [configuration parseJSON:inputString];
+    
+    if (configuration.action == nil) {
+        [self exit];
         return;
     }
     
@@ -27,27 +30,6 @@
     
     CFRunLoopRun();
     
-}
-
-- (void)parseJSON:(NSString*)jsonString
-{
-
-    NSData * jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError * error = nil;
-    _configuration = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-    
-    if (_configuration == nil) {
-        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
-        [self exit];
-    }
-    
-}
-
-- (NSString*)serializeJSON:(NSDictionary*)dictionary
-{
-    NSError * error = nil;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&error];
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
 - (void)noDevicesFound:(NSTimer*)theTimer
@@ -76,8 +58,8 @@
     }
     
     if (!moreComing) {
-        NSLog(@"{\"repsonse\": \"completed\", \"message\": \"All devices have been added.\"}");
-        if ([_configuration[@"action"] isEqualToString:@"list"]) {
+        NSLog(@"{\"repsonse\": \"completed\", \"message\": \"All devices have been listed.\"}");
+        if ([configuration.action[@"action"] isEqualToString:@"list"]) {
             [self exit];
         } else {
             [self openCloseSession:nil];
@@ -247,7 +229,7 @@
 - (IBAction)selectFunctionalUnit:(id)sender
 {
 
-    ICScannerDevice* scanner = [mScanners objectAtIndex:0];
+    ICScannerDevice *scanner = [mScanners objectAtIndex:0];
 
     // TODO: change the false to a lookup in the config of ifUseFlatbed
     [scanner requestSelectFunctionalUnit:(ICScannerFunctionalUnitType) (false ? ICScannerFunctionalUnitTypeFlatbed : ICScannerFunctionalUnitTypeDocumentFeeder) ];
@@ -257,10 +239,10 @@
 - (IBAction)startScan:(id)sender
 {
     
-    ICScannerDevice * scanner = [self selectedScanner];
-    ICScannerFunctionalUnit * fu = scanner.selectedFunctionalUnit;
+    ICScannerDevice *scanner = [self selectedScanner];
+    ICScannerFunctionalUnit *fu = scanner.selectedFunctionalUnit;
 
-    if ([_configuration[@"action"] isEqualToString:@"list"]) return;
+    if ([configuration.action[@"action"] isEqualToString:@"list"]) return;
     
     if ( ( fu.scanInProgress == NO ) && ( fu.overviewScanInProgress == NO ) )
     {

@@ -42,7 +42,27 @@
 
 - (NSDictionary*)getSizeOptions:(NSSize*)size
 {
-    return @{@"width": [NSString stringWithFormat:@"%f", size->width], @"height": [NSString stringWithFormat:@"%f", size->height]};
+    return @{@"width": [NSString stringWithFormat:@"%@", @(size->width)], @"height": [NSString stringWithFormat:@"%@", @(size->height)]};
+}
+
+- (NSString*)getBitDepthOptions:(ICScannerBitDepth)bitDepth
+{
+    
+    switch (bitDepth){
+        case ICScannerBitDepth1Bit:
+            return @"1";
+            break;
+        case ICScannerBitDepth8Bits:
+            return @"8";
+            break;
+        case ICScannerBitDepth16Bits:
+            return @"16";
+            break;
+        default:
+            return @"Not Available";
+            
+    }
+
 }
 
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
@@ -56,6 +76,9 @@
     [dictionary setObject:functionalUnit.usesThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"use-back-white-threshold"];
     
     [dictionary setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:@"default-black-and-white-threshold"];
+    
+    ICScannerBitDepth bitDepth = functionalUnit.bitDepth;
+    [dictionary setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
     
     // [dictionary setObject:functionalUnit.bitDepth forKey:@"bit-depth"];
     

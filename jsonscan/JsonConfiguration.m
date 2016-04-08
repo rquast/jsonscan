@@ -40,4 +40,40 @@
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
+- (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
+{
+    
+    NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
+
+    [dictionary setObject:functionalUnit.acceptsThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"can-use-black-white-threshold"];
+    [dictionary setObject:functionalUnit.canPerformOverviewScan ? @"true": @"false" forKey:@"can-perform-overview-scan"];
+    
+    [dictionary setObject:functionalUnit.usesThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"use-back-white-threshold"];
+    
+    // [dictionary setObject:functionalUnit.bitDepth forKey:@"bit-depth"];
+    
+    if ( ( functionalUnit.scanInProgress == NO ) && ( functionalUnit.overviewScanInProgress == NO ) )
+    {
+        if ( functionalUnit.type == ICScannerFunctionalUnitTypeDocumentFeeder )
+        {
+            ICScannerFunctionalUnitDocumentFeeder* dfu = (ICScannerFunctionalUnitDocumentFeeder*)functionalUnit;
+            
+            [dictionary setObject:dfu.documentLoaded ? @"true": @"false" forKey:@"is-document-loaded"];
+            
+            [dictionary setObject:[NSString stringWithFormat:@"%f x %f", dfu.documentSize.width, dfu.documentSize.height] forKey:@"document-size"];
+            
+            [dictionary setObject:dfu.duplexScanningEnabled ? @"true": @"false" forKey:@"is-duplex-scanning-enabled"];
+            
+            [dictionary setObject:dfu.reverseFeederPageOrder ? @"true": @"false" forKey:@"is-reverse-feeder-page-order"];
+            
+            [dictionary setObject:dfu.supportsDuplexScanning ? @"true": @"false" forKey:@"supports-duplex-scanning"];
+            
+            [dictionary setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:@"resolution"];
+
+        }
+    }
+    
+    return [self serializeJSON:(NSDictionary*)dictionary];
+}
+
 @end

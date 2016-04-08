@@ -20,7 +20,7 @@
     
     mDeviceBrowser = [[ICDeviceBrowser alloc] init];
     mDeviceBrowser.delegate = self;
-    mDeviceBrowser.browsedDeviceTypeMask = ICDeviceLocationTypeMaskBonjour | ICDeviceLocationTypeMaskShared | ICDeviceLocationTypeMaskLocal |ICDeviceLocationTypeMaskRemote | ICDeviceTypeMaskScanner;
+    mDeviceBrowser.browsedDeviceTypeMask = ICDeviceLocationTypeMaskBonjour | ICDeviceLocationTypeMaskShared | ICDeviceLocationTypeMaskLocal | ICDeviceLocationTypeMaskRemote | ICDeviceLocationTypeMaskBluetooth | ICDeviceTypeMaskScanner;
     
     [mDeviceBrowser start];
 
@@ -100,11 +100,12 @@
 
 - (void)didRemoveDevice:(ICDevice*)removedDevice
 {
-    
+    NSLog(@"{\"repsonse\": \"status\", \"message\": \"Removed: %@\"}", [removedDevice name]);
 }
 
 - (void)deviceDidBecomeReady:(ICScannerDevice*)scanner
 {
+    NSLog(@"{\"repsonse\": \"status\", \"message\": \"Scanner Ready: %@\"}", [scanner name]);
 }
 
 - (void)device:(ICDevice*)device didCloseSessionWithError:(NSError*)error
@@ -116,6 +117,7 @@
 
 - (void)deviceDidChangeName:(ICDevice*)device;
 {
+    NSLog(@"{\"repsonse\": \"status\", \"message\": \"Changed Name: %@\"}", [device name]);
 }
 
 - (void)deviceDidChangeSharingState:(ICDevice*)device
@@ -223,8 +225,10 @@
 - (IBAction)startScan:(id)sender
 {
     
-    ICScannerDevice *scanner = [self selectedScanner];
-    ICScannerFunctionalUnit *fu = scanner.selectedFunctionalUnit;
+    ICScannerDevice * scanner = [self selectedScanner];
+    ICScannerFunctionalUnit * fu = scanner.selectedFunctionalUnit;
+    NSString * scannerOptionsJson = [mConfiguration getScannerOptions:fu];
+    NSLog(@"%@", scannerOptionsJson);
     
     if ( ( fu.scanInProgress == NO ) && ( fu.overviewScanInProgress == NO ) )
     {

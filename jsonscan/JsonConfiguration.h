@@ -1,4 +1,5 @@
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
+#import <ImageCaptureCore/ImageCaptureCore.h>
 
 @interface JsonConfiguration : NSObject
 
@@ -6,5 +7,6 @@
 
 - (void)parseJSON:(NSString*)jsonString;
 - (NSString*)serializeJSON:(NSDictionary*)dictionary;
+- (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit;
 
 @end

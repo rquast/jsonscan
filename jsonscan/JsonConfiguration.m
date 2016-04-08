@@ -68,6 +68,8 @@
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
     
+    // TODO: Organize the properties into read only and read-write.
+    
     NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
 
     [dictionary setObject:functionalUnit.acceptsThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"can-use-black-white-threshold"];
@@ -79,6 +81,40 @@
     
     ICScannerBitDepth bitDepth = functionalUnit.bitDepth;
     [dictionary setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
+    
+    // functionalUnit.measurementUnit
+    
+    // functionalUnit.nativeXResolution
+    // functionalUnit.nativeYResolution
+    
+    // functionalUnit.overviewImage ???
+    
+    // functionalUnit.overviewResolution
+    
+    // IMPORTANT ONE.
+    // functionalUnit.pixelDataType
+    
+    // IMPORTANT ONE.
+    // functionalUnit.preferredResolutions
+    
+    // IMPORTANT ONE.
+    // functionalUnit.preferredScaleFactors
+    
+    // functionalUnit.scaleFactor
+    
+    // IMPORTANT ONE.
+    // functionalUnit.scanArea
+    
+    // IMPORTANT ONE.
+    // functionalUnit.supportedBitDepths
+    
+    // functionalUnit.scanAreaOrientation
+    
+    // IMPORTANT ONEs.
+    // functionalUnit.supportedBitDepths
+    // functionalUnit.supportedResolutions
+    // functionalUnit.supportedScaleFactors
+    // functionalUnit.supportedMeasurementUnits
     
     // [dictionary setObject:functionalUnit.bitDepth forKey:@"bit-depth"];
     
@@ -104,6 +140,15 @@
             [dictionary setObject:dfu.supportsDuplexScanning ? @"true": @"false" forKey:@"supports-duplex-scanning"];
             
             [dictionary setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:@"resolution"];
+            
+            // IMPORTANT ONE.
+            // dfu.documentType
+            
+            // dfu.evenPageOrientation
+            // dfu.oddPageOrientation
+            
+            // IMPORTANT ONE.
+            // dfu.supportedDocumentTypes
 
         }
     }

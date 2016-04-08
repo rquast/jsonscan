@@ -40,6 +40,11 @@
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
+- (NSDictionary*)getSizeOptions:(NSSize*)size
+{
+    return @{@"width": [NSString stringWithFormat:@"%f", size->width], @"height": [NSString stringWithFormat:@"%f", size->height]};
+}
+
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
     
@@ -49,6 +54,8 @@
     [dictionary setObject:functionalUnit.canPerformOverviewScan ? @"true": @"false" forKey:@"can-perform-overview-scan"];
     
     [dictionary setObject:functionalUnit.usesThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"use-back-white-threshold"];
+    
+    [dictionary setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:@"default-black-and-white-threshold"];
     
     // [dictionary setObject:functionalUnit.bitDepth forKey:@"bit-depth"];
     
@@ -60,7 +67,12 @@
             
             [dictionary setObject:dfu.documentLoaded ? @"true": @"false" forKey:@"is-document-loaded"];
             
-            [dictionary setObject:[NSString stringWithFormat:@"%f x %f", dfu.documentSize.width, dfu.documentSize.height] forKey:@"document-size"];
+            // Can't access pointer of a property. This is a workaround.
+            NSSize documentSize = dfu.documentSize;
+            [dictionary setObject:[self getSizeOptions:&documentSize] forKey:@"document-size"];
+            
+            NSSize physicalSize = dfu.physicalSize;
+            [dictionary setObject:[self getSizeOptions:&physicalSize] forKey:@"physical-size"];
             
             [dictionary setObject:dfu.duplexScanningEnabled ? @"true": @"false" forKey:@"is-duplex-scanning-enabled"];
             

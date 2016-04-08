@@ -8,5 +8,6 @@
 - (void)parseJSON:(NSString*)jsonString;
 - (NSString*)serializeJSON:(NSDictionary*)dictionary;
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit;
+- (NSDictionary*)getSizeOptions:(NSSize*)size;
 
 @end

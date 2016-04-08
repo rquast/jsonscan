@@ -12,7 +12,7 @@ int main (int argc, const char * argv[])
             NSFileHandle *input = [NSFileHandle fileHandleWithStandardInput];
             NSData *inputData = [NSData dataWithData:[input readDataToEndOfFile]];
             inputString = [[NSString alloc] initWithData:inputData encoding:NSUTF8StringEncoding];
-        } else if (argc == 2 && [[NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding] isEqualToString:@"-c"]) {
+        } else if (argc == 2 && [[NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding] isEqualToString:@"-s"]) {
             inputString = @"{\"action\": \"scan\"}";
         }
         

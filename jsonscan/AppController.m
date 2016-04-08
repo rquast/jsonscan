@@ -60,10 +60,8 @@
     if (!moreComing) {
         if ([mConfiguration.action[@"action"] isEqualToString:@"list"]) {
             NSLog(@"{\"repsonse\": \"status\", \"message\": \"All devices have been listed.\"}");
-            [self exit];
-        } else {
-            [self openCloseSession:nil];
         }
+        [self openCloseSession:nil];
     }
     
 }
@@ -153,7 +151,22 @@
 
 - (void)scannerDevice:(ICScannerDevice*)scanner didSelectFunctionalUnit:(ICScannerFunctionalUnit*)functionalUnit error:(NSError*)error
 {
-    [self startScan:self];
+    
+    if ([mConfiguration.action[@"action"] isEqualToString:@"list"]) {
+        
+        ICScannerDevice * scanner = [self selectedScanner];
+        ICScannerFunctionalUnit * fu = scanner.selectedFunctionalUnit;
+        NSString * scannerOptionsJson = [mConfiguration getScannerOptions:fu];
+        NSLog(@"%@", scannerOptionsJson);
+        
+        [self exit];
+        
+    } else {
+        
+        [self startScan:self];
+        
+    }
+    
 }
 
 - (void)scannerDevice:(ICScannerDevice*)scanner didCompleteOverviewScanWithError:(NSError*)error;
@@ -227,8 +240,6 @@
     
     ICScannerDevice * scanner = [self selectedScanner];
     ICScannerFunctionalUnit * fu = scanner.selectedFunctionalUnit;
-    NSString * scannerOptionsJson = [mConfiguration getScannerOptions:fu];
-    NSLog(@"%@", scannerOptionsJson);
     
     if ( ( fu.scanInProgress == NO ) && ( fu.overviewScanInProgress == NO ) )
     {

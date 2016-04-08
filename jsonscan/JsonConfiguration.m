@@ -73,7 +73,7 @@
         }
     }
     
-    return [self serializeJSON:(NSDictionary*)dictionary];
+    return [self serializeJSON:@{@"response": @"settings", @"settings": dictionary}];
 }
 
 @end

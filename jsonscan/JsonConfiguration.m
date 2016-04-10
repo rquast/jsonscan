@@ -50,68 +50,68 @@
     return @{@"x": [NSString stringWithFormat:@"%@", @(rect->origin.x)], @"y": [NSString stringWithFormat:@"%@", @(rect->origin.y)],  @"width": [NSString stringWithFormat:@"%@", @(rect->size.width)], @"height": [NSString stringWithFormat:@"%@", @(rect->size.height)]};
 }
 
-- (NSString*)getBitDepthOptions:(ICScannerBitDepth)bitDepth
+- (NSDictionary*)getBitDepthOptions:(ICScannerBitDepth)bitDepth
 {
     
     switch (bitDepth) {
         case ICScannerBitDepth1Bit:
-            return @"1";
+            return @{@(ICScannerBitDepth1Bit): @"1 Bit"};
         case ICScannerBitDepth8Bits:
-            return @"8";
+            return @{@(ICScannerBitDepth8Bits): @"8 Bits"};
         case ICScannerBitDepth16Bits:
-            return @"16";
+            return @{@(ICScannerBitDepth16Bits): @"16 Bits"};
         default:
-            return @"Not Available";
+            return nil;
     }
 
 }
 
-- (NSString*)getMeasurementUnitOptions:(ICScannerMeasurementUnit)measurementUnit
+- (NSDictionary*)getMeasurementUnitOptions:(ICScannerMeasurementUnit)measurementUnit
 {
     
     switch (measurementUnit) {
         case ICScannerMeasurementUnitInches:
-            return @"Inches";
+            return @{@(ICScannerMeasurementUnitInches): @"Inches"};
         case ICScannerMeasurementUnitCentimeters:
-            return @"Centimeters";
+            return @{@(ICScannerMeasurementUnitCentimeters): @"Centimeters"};
         case ICScannerMeasurementUnitPicas:
-            return @"Picas";
+            return @{@(ICScannerMeasurementUnitPicas): @"Picas"};
         case ICScannerMeasurementUnitPoints:
-            return @"Points";
+            return @{@(ICScannerMeasurementUnitPoints): @"Points"};
         case ICScannerMeasurementUnitTwips:
-            return @"Twips";
+            return @{@(ICScannerMeasurementUnitTwips): @"Twips"};
         case ICScannerMeasurementUnitPixels:
-            return @"Pixels";
+            return @{@(ICScannerMeasurementUnitPixels): @"Pixels"};
         default:
-            return @"Not Available";
+            return nil;
     }
     
 }
 
-- (NSString*)getPixelDataTypeOptions:(ICScannerPixelDataType)pixelDataType
+- (NSDictionary*)getPixelDataTypeOptions:(ICScannerPixelDataType)pixelDataType
 {
     
     switch (pixelDataType) {
         case ICScannerPixelDataTypeBW:
-            return @"Black and White";
+            return @{@(ICScannerMeasurementUnitInches): @"Black and White"};
         case ICScannerPixelDataTypeGray:
-            return @"Grayscale";
+            return @{@(ICScannerPixelDataTypeGray): @"Grayscale"};
         case ICScannerPixelDataTypeRGB:
-            return @"RGB";
+            return @{@(ICScannerPixelDataTypeRGB): @"RGB"};
         case ICScannerPixelDataTypePalette:
-            return @"Indexed";
+            return @{@(ICScannerPixelDataTypePalette): @"Indexed"};
         case ICScannerPixelDataTypeCMY:
-            return @"CMY";
+            return @{@(ICScannerPixelDataTypeCMY): @"CMY"};
         case ICScannerPixelDataTypeCMYK:
-            return @"CMYK";
+            return @{@(ICScannerPixelDataTypeCMYK): @"CMYK"};
         case ICScannerPixelDataTypeYUV:
-            return @"YUV";
+            return @{@(ICScannerPixelDataTypeYUV): @"YUV"};
         case ICScannerPixelDataTypeYUVK:
-            return @"YUVK";
+            return @{@(ICScannerPixelDataTypeYUVK): @"YUVK"};
         case ICScannerPixelDataTypeCIEXYZ:
-            return @"CIEXYZ";
+            return @{@(ICScannerPixelDataTypeCIEXYZ): @"CIEXYZ"};
         default:
-            return @"Not Available";
+            return nil;
     }
     
 }
@@ -144,9 +144,6 @@
 
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
- 
-    // TODO: Move the key strings into a dictionary so they it can be used listing the type of option and a description of it.
-    // Also, link the related keys together in the dictionary, and make the dictionary printable to the cli.
     
     NSMutableDictionary * readonly = [[NSMutableDictionary alloc] init];
     NSMutableDictionary * readwrite = [[NSMutableDictionary alloc] init];
@@ -179,22 +176,17 @@
     [readonly setObject:functionalUnit.preferredScaleFactors forKey:@"preferred-scale-factors"];
     
     [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
- 
+    
+    [readonly setObject:functionalUnit.supportedBitDepths forKey:@"supported-bit-depths"];
+    [readonly setObject:functionalUnit.supportedResolutions forKey:@"supported-resolutions"];
+    [readonly setObject:functionalUnit.supportedScaleFactors forKey:@"supported-scale-factors"];
+    [readonly setObject:functionalUnit.supportedMeasurementUnits forKey:@"supported-scale-factors"];
+
     NSRect scanArea = functionalUnit.scanArea;
     [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
 
-    [readonly setObject:functionalUnit.supportedBitDepths forKey:@"supported-bit-depths"];
-    
     ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
     [readwrite setObject:[self getScanAreaOrientation:scanAreaOrientation] forKey:@"scan-area-orientation"];
-    
-    // IMPORTANT ONEs.
-    // functionalUnit.supportedBitDepths
-    // functionalUnit.supportedResolutions
-    // functionalUnit.supportedScaleFactors
-    // functionalUnit.supportedMeasurementUnits
-    
-    // [dictionary setObject:functionalUnit.bitDepth forKey:@"bit-depth"];
     
     if ( ( functionalUnit.scanInProgress == NO ) && ( functionalUnit.overviewScanInProgress == NO ) )
     {

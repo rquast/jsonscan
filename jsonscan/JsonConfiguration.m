@@ -65,24 +65,56 @@
 
 }
 
+- (NSString*)getMeasurementUnitOptions:(ICScannerMeasurementUnit)measurementUnit
+{
+    
+    switch (measurementUnit){
+        case ICScannerMeasurementUnitInches:
+            return @"Inches";
+            break;
+        case ICScannerMeasurementUnitCentimeters:
+            return @"Centimeters";
+            break;
+        case ICScannerMeasurementUnitPicas:
+            return @"Picas";
+            break;
+        case ICScannerMeasurementUnitPoints:
+            return @"Points";
+            break;
+        case ICScannerMeasurementUnitTwips:
+            return @"Twips";
+            break;
+        case ICScannerMeasurementUnitPixels:
+            return @"Pixels";
+            break;
+        default:
+            return @"Not Available";
+            
+    }
+    
+}
+
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
     
     // TODO: Organize the properties into read only and read-write.
     
-    NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary * readonly = [[NSMutableDictionary alloc] init];
+    
+    NSMutableDictionary * readwrite = [[NSMutableDictionary alloc] init];
 
-    [dictionary setObject:functionalUnit.acceptsThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"can-use-black-white-threshold"];
-    [dictionary setObject:functionalUnit.canPerformOverviewScan ? @"true": @"false" forKey:@"can-perform-overview-scan"];
+    [readonly setObject:functionalUnit.acceptsThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"can-use-black-white-threshold"];
+    [readonly setObject:functionalUnit.canPerformOverviewScan ? @"true": @"false" forKey:@"can-perform-overview-scan"];
     
-    [dictionary setObject:functionalUnit.usesThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"use-back-white-threshold"];
+    [readonly setObject:functionalUnit.usesThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"use-back-white-threshold"];
     
-    [dictionary setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:@"default-black-and-white-threshold"];
+    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:@"default-black-and-white-threshold"];
     
     ICScannerBitDepth bitDepth = functionalUnit.bitDepth;
-    [dictionary setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
+    [readwrite setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
     
-    // functionalUnit.measurementUnit
+    ICScannerMeasurementUnit measurementUnit = functionalUnit.measurementUnit;
+    [readwrite setObject:[self getMeasurementUnitOptions:measurementUnit] forKey:@"measurement-unit"];
     
     // functionalUnit.nativeXResolution
     // functionalUnit.nativeYResolution
@@ -124,22 +156,22 @@
         {
             ICScannerFunctionalUnitDocumentFeeder* dfu = (ICScannerFunctionalUnitDocumentFeeder*)functionalUnit;
             
-            [dictionary setObject:dfu.documentLoaded ? @"true": @"false" forKey:@"is-document-loaded"];
+            [readonly setObject:dfu.documentLoaded ? @"true": @"false" forKey:@"is-document-loaded"];
             
             // Can't access pointer of a property. This is a workaround.
             NSSize documentSize = dfu.documentSize;
-            [dictionary setObject:[self getSizeOptions:&documentSize] forKey:@"document-size"];
+            [readonly setObject:[self getSizeOptions:&documentSize] forKey:@"document-size"];
             
             NSSize physicalSize = dfu.physicalSize;
-            [dictionary setObject:[self getSizeOptions:&physicalSize] forKey:@"physical-size"];
+            [readonly setObject:[self getSizeOptions:&physicalSize] forKey:@"physical-size"];
             
-            [dictionary setObject:dfu.duplexScanningEnabled ? @"true": @"false" forKey:@"is-duplex-scanning-enabled"];
+            [readwrite setObject:dfu.duplexScanningEnabled ? @"true": @"false" forKey:@"is-duplex-scanning-enabled"];
             
-            [dictionary setObject:dfu.reverseFeederPageOrder ? @"true": @"false" forKey:@"is-reverse-feeder-page-order"];
+            [readonly setObject:dfu.reverseFeederPageOrder ? @"true": @"false" forKey:@"is-reverse-feeder-page-order"];
             
-            [dictionary setObject:dfu.supportsDuplexScanning ? @"true": @"false" forKey:@"supports-duplex-scanning"];
+            [readonly setObject:dfu.supportsDuplexScanning ? @"true": @"false" forKey:@"supports-duplex-scanning"];
             
-            [dictionary setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:@"resolution"];
+            [readwrite setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:@"resolution"];
             
             // IMPORTANT ONE.
             // dfu.documentType
@@ -153,7 +185,7 @@
         }
     }
     
-    return [self serializeJSON:@{@"response": @"settings", @"settings": dictionary}];
+    return [self serializeJSON:@{@"response": @"settings", @"read-only-settings": readonly, @"read-write-settings": readwrite}];
 }
 
 @end

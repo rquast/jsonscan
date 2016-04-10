@@ -45,10 +45,15 @@
     return @{@"width": [NSString stringWithFormat:@"%@", @(size->width)], @"height": [NSString stringWithFormat:@"%@", @(size->height)]};
 }
 
+- (NSDictionary*)getRectOptions:(NSRect*)rect
+{
+    return @{@"x": [NSString stringWithFormat:@"%@", @(rect->origin.x)], @"y": [NSString stringWithFormat:@"%@", @(rect->origin.y)],  @"width": [NSString stringWithFormat:@"%@", @(rect->size.width)], @"height": [NSString stringWithFormat:@"%@", @(rect->size.height)]};
+}
+
 - (NSString*)getBitDepthOptions:(ICScannerBitDepth)bitDepth
 {
     
-    switch (bitDepth){
+    switch (bitDepth) {
         case ICScannerBitDepth1Bit:
             return @"1";
             break;
@@ -67,7 +72,7 @@
 - (NSString*)getMeasurementUnitOptions:(ICScannerMeasurementUnit)measurementUnit
 {
     
-    switch (measurementUnit){
+    switch (measurementUnit) {
         case ICScannerMeasurementUnitInches:
             return @"Inches";
             break;
@@ -95,7 +100,7 @@
 - (NSString*)getPixelDataTypeOptions:(ICScannerPixelDataType)pixelDataType
 {
     
-    switch (pixelDataType){
+    switch (pixelDataType) {
         case ICScannerPixelDataTypeBW:
             return @"Black and White";
             break;
@@ -160,17 +165,15 @@
 
     ICScannerPixelDataType pixelDataType = functionalUnit.pixelDataType;
     [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:@"pixel-data-type"];
+
+    [readonly setObject:functionalUnit.preferredResolutions forKey:@"preferred-resolutions"];
+
+    [readonly setObject:functionalUnit.preferredScaleFactors forKey:@"preferred-scale-factors"];
     
-    // IMPORTANT ONE.
-    // functionalUnit.preferredResolutions
-    
-    // IMPORTANT ONE.
-    // functionalUnit.preferredScaleFactors
-    
-    // functionalUnit.scaleFactor
-    
-    // IMPORTANT ONE.
-    // functionalUnit.scanArea
+    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
+ 
+    NSRect scanArea = functionalUnit.scanArea;
+    [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
     
     // IMPORTANT ONE.
     // functionalUnit.supportedBitDepths

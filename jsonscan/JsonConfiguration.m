@@ -56,13 +56,10 @@
     switch (bitDepth) {
         case ICScannerBitDepth1Bit:
             return @"1";
-            break;
         case ICScannerBitDepth8Bits:
             return @"8";
-            break;
         case ICScannerBitDepth16Bits:
             return @"16";
-            break;
         default:
             return @"Not Available";
     }
@@ -75,22 +72,16 @@
     switch (measurementUnit) {
         case ICScannerMeasurementUnitInches:
             return @"Inches";
-            break;
         case ICScannerMeasurementUnitCentimeters:
             return @"Centimeters";
-            break;
         case ICScannerMeasurementUnitPicas:
             return @"Picas";
-            break;
         case ICScannerMeasurementUnitPoints:
             return @"Points";
-            break;
         case ICScannerMeasurementUnitTwips:
             return @"Twips";
-            break;
         case ICScannerMeasurementUnitPixels:
             return @"Pixels";
-            break;
         default:
             return @"Not Available";
     }
@@ -103,31 +94,48 @@
     switch (pixelDataType) {
         case ICScannerPixelDataTypeBW:
             return @"Black and White";
-            break;
         case ICScannerPixelDataTypeGray:
             return @"Grayscale";
-            break;
         case ICScannerPixelDataTypeRGB:
             return @"RGB";
-            break;
         case ICScannerPixelDataTypePalette:
             return @"Indexed";
-            break;
         case ICScannerPixelDataTypeCMY:
             return @"CMY";
-            break;
         case ICScannerPixelDataTypeCMYK:
             return @"CMYK";
-            break;
         case ICScannerPixelDataTypeYUV:
             return @"YUV";
-            break;
         case ICScannerPixelDataTypeYUVK:
             return @"YUVK";
-            break;
         case ICScannerPixelDataTypeCIEXYZ:
             return @"CIEXYZ";
-            break;
+        default:
+            return @"Not Available";
+    }
+    
+}
+
+- (NSString*)getScanAreaOrientation:(ICEXIFOrientationType)scanAreaOrientation
+{
+    
+    switch (scanAreaOrientation) {
+        case ICEXIFOrientation1:
+            return @"Normal";
+        case ICEXIFOrientation2:
+            return @"Flipped Horizontally";
+        case ICEXIFOrientation3:
+            return @"Rotated 180";
+        case ICEXIFOrientation4:
+            return @"Flipped Vertically";
+        case ICEXIFOrientation5:
+            return @"Rotated 90 CCW and Flipped Vertically";
+        case ICEXIFOrientation6:
+            return @"Rotated 90 CCW";
+        case ICEXIFOrientation7:
+            return @"Rotated 90 CW and Flipped Vertically";
+        case ICEXIFOrientation8:
+            return @"Rotated 90 CW";
         default:
             return @"Not Available";
     }
@@ -136,11 +144,11 @@
 
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
-    
-    // TODO: Organize the properties into read only and read-write.
+ 
+    // TODO: Move the key strings into a dictionary so they it can be used listing the type of option and a description of it.
+    // Also, link the related keys together in the dictionary, and make the dictionary printable to the cli.
     
     NSMutableDictionary * readonly = [[NSMutableDictionary alloc] init];
-    
     NSMutableDictionary * readwrite = [[NSMutableDictionary alloc] init];
 
     [readonly setObject:functionalUnit.acceptsThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"can-use-black-white-threshold"];
@@ -174,11 +182,11 @@
  
     NSRect scanArea = functionalUnit.scanArea;
     [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
+
+    [readonly setObject:functionalUnit.supportedBitDepths forKey:@"supported-bit-depths"];
     
-    // IMPORTANT ONE.
-    // functionalUnit.supportedBitDepths
-    
-    // functionalUnit.scanAreaOrientation
+    ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
+    [readwrite setObject:[self getScanAreaOrientation:scanAreaOrientation] forKey:@"scan-area-orientation"];
     
     // IMPORTANT ONEs.
     // functionalUnit.supportedBitDepths

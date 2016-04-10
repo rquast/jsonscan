@@ -60,7 +60,6 @@
             break;
         default:
             return @"Not Available";
-            
     }
 
 }
@@ -89,7 +88,43 @@
             break;
         default:
             return @"Not Available";
-            
+    }
+    
+}
+
+- (NSString*)getPixelDataTypeOptions:(ICScannerPixelDataType)pixelDataType
+{
+    
+    switch (pixelDataType){
+        case ICScannerPixelDataTypeBW:
+            return @"Black and White";
+            break;
+        case ICScannerPixelDataTypeGray:
+            return @"Grayscale";
+            break;
+        case ICScannerPixelDataTypeRGB:
+            return @"RGB";
+            break;
+        case ICScannerPixelDataTypePalette:
+            return @"Indexed";
+            break;
+        case ICScannerPixelDataTypeCMY:
+            return @"CMY";
+            break;
+        case ICScannerPixelDataTypeCMYK:
+            return @"CMYK";
+            break;
+        case ICScannerPixelDataTypeYUV:
+            return @"YUV";
+            break;
+        case ICScannerPixelDataTypeYUVK:
+            return @"YUVK";
+            break;
+        case ICScannerPixelDataTypeCIEXYZ:
+            return @"CIEXYZ";
+            break;
+        default:
+            return @"Not Available";
     }
     
 }
@@ -116,15 +151,15 @@
     ICScannerMeasurementUnit measurementUnit = functionalUnit.measurementUnit;
     [readwrite setObject:[self getMeasurementUnitOptions:measurementUnit] forKey:@"measurement-unit"];
     
-    // functionalUnit.nativeXResolution
-    // functionalUnit.nativeYResolution
+    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeXResolution)] forKey:@"native-x-resolution"];
+    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeYResolution)] forKey:@"native-y-resolution"];
     
     // functionalUnit.overviewImage ???
     
-    // functionalUnit.overviewResolution
-    
-    // IMPORTANT ONE.
-    // functionalUnit.pixelDataType
+    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.overviewResolution)] forKey:@"overview-resolution"];
+
+    ICScannerPixelDataType pixelDataType = functionalUnit.pixelDataType;
+    [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:@"pixel-data-type"];
     
     // IMPORTANT ONE.
     // functionalUnit.preferredResolutions

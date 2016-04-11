@@ -71,17 +71,17 @@
     
     switch (measurementUnit) {
         case ICScannerMeasurementUnitInches:
-            return @{@(ICScannerMeasurementUnitInches): @"Inches"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerMeasurementUnitInches)]: @"Inches"};
         case ICScannerMeasurementUnitCentimeters:
-            return @{@(ICScannerMeasurementUnitCentimeters): @"Centimeters"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerMeasurementUnitCentimeters)]: @"Centimeters"};
         case ICScannerMeasurementUnitPicas:
-            return @{@(ICScannerMeasurementUnitPicas): @"Picas"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerMeasurementUnitPicas)]: @"Picas"};
         case ICScannerMeasurementUnitPoints:
-            return @{@(ICScannerMeasurementUnitPoints): @"Points"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerMeasurementUnitPoints)]: @"Points"};
         case ICScannerMeasurementUnitTwips:
-            return @{@(ICScannerMeasurementUnitTwips): @"Twips"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerMeasurementUnitTwips)]: @"Twips"};
         case ICScannerMeasurementUnitPixels:
-            return @{@(ICScannerMeasurementUnitPixels): @"Pixels"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerMeasurementUnitPixels)]: @"Pixels"};
         default:
             return nil;
     }
@@ -93,23 +93,23 @@
     
     switch (pixelDataType) {
         case ICScannerPixelDataTypeBW:
-            return @{@(ICScannerMeasurementUnitInches): @"Black and White"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerMeasurementUnitInches)]: @"Black and White"};
         case ICScannerPixelDataTypeGray:
-            return @{@(ICScannerPixelDataTypeGray): @"Grayscale"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerPixelDataTypeGray)]: @"Grayscale"};
         case ICScannerPixelDataTypeRGB:
-            return @{@(ICScannerPixelDataTypeRGB): @"RGB"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerPixelDataTypeRGB)]: @"RGB"};
         case ICScannerPixelDataTypePalette:
-            return @{@(ICScannerPixelDataTypePalette): @"Indexed"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerPixelDataTypePalette)]: @"Indexed"};
         case ICScannerPixelDataTypeCMY:
-            return @{@(ICScannerPixelDataTypeCMY): @"CMY"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerPixelDataTypeCMY)]: @"CMY"};
         case ICScannerPixelDataTypeCMYK:
-            return @{@(ICScannerPixelDataTypeCMYK): @"CMYK"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerPixelDataTypeCMYK)]: @"CMYK"};
         case ICScannerPixelDataTypeYUV:
-            return @{@(ICScannerPixelDataTypeYUV): @"YUV"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerPixelDataTypeYUV)]: @"YUV"};
         case ICScannerPixelDataTypeYUVK:
-            return @{@(ICScannerPixelDataTypeYUVK): @"YUVK"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerPixelDataTypeYUVK)]: @"YUVK"};
         case ICScannerPixelDataTypeCIEXYZ:
-            return @{@(ICScannerPixelDataTypeCIEXYZ): @"CIEXYZ"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerPixelDataTypeCIEXYZ)]: @"CIEXYZ"};
         default:
             return nil;
     }

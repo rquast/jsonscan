@@ -156,10 +156,10 @@
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:@"default-black-and-white-threshold"];
     
     ICScannerBitDepth bitDepth = functionalUnit.bitDepth;
-    // [readwrite setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
+    [readwrite setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
     
     ICScannerMeasurementUnit measurementUnit = functionalUnit.measurementUnit;
-    // [readwrite setObject:[self getMeasurementUnitOptions:measurementUnit] forKey:@"measurement-unit"];
+    [readwrite setObject:[self getMeasurementUnitOptions:measurementUnit] forKey:@"measurement-unit"];
     
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeXResolution)] forKey:@"native-x-resolution"];
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeYResolution)] forKey:@"native-y-resolution"];
@@ -169,13 +169,13 @@
     [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.overviewResolution)] forKey:@"overview-resolution"];
 
     ICScannerPixelDataType pixelDataType = functionalUnit.pixelDataType;
-    // [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:@"pixel-data-type"];
+    [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:@"pixel-data-type"];
 
     // [readonly setObject:functionalUnit.preferredResolutions forKey:@"preferred-resolutions"];
 
     // [readonly setObject:functionalUnit.preferredScaleFactors forKey:@"preferred-scale-factors"];
     
-    // [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
+    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
     
     
     NSMutableDictionary * supportedBitDepths = [[NSMutableDictionary alloc] init];
@@ -191,11 +191,11 @@
     [readonly setObject:functionalUnit.supportedMeasurementUnits forKey:@"supported-scale-factors"];
     */
     
-    // NSRect scanArea = functionalUnit.scanArea;
-    // [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
+    NSRect scanArea = functionalUnit.scanArea;
+    [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
 
-    // ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
-    // [readwrite setObject:[self getScanAreaOrientation:scanAreaOrientation] forKey:@"scan-area-orientation"];
+    ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
+    [readwrite setObject:[self getScanAreaOrientation:scanAreaOrientation] forKey:@"scan-area-orientation"];
     
     if ( ( functionalUnit.scanInProgress == NO ) && ( functionalUnit.overviewScanInProgress == NO ) )
     {

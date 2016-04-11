@@ -186,7 +186,15 @@
     
     
     /*
-    [readonly setObject:functionalUnit.supportedResolutions forKey:@"supported-resolutions"];
+    NSMutableDictionary * supportedResolutions = [[NSMutableDictionary alloc] init];
+    [functionalUnit.supportedResolutions enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [supportedResolutions addEntriesFromDictionary:[self getBitDepthOptions:idx]]; // TODO: change this to a new getResolutionOptions.
+    }];
+    [readonly setObject:supportedResolutions forKey:@"supported-resolutions"];
+    */
+    
+    
+    /*
     [readonly setObject:functionalUnit.supportedScaleFactors forKey:@"supported-scale-factors"];
     [readonly setObject:functionalUnit.supportedMeasurementUnits forKey:@"supported-scale-factors"];
     */

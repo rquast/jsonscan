@@ -55,11 +55,11 @@
     
     switch (bitDepth) {
         case ICScannerBitDepth1Bit:
-            return @{@(ICScannerBitDepth1Bit): @"1 Bit"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerBitDepth1Bit)]: @"1 Bit"};
         case ICScannerBitDepth8Bits:
-            return @{@(ICScannerBitDepth8Bits): @"8 Bits"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerBitDepth8Bits)]: @"8 Bits"};
         case ICScannerBitDepth16Bits:
-            return @{@(ICScannerBitDepth16Bits): @"16 Bits"};
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerBitDepth16Bits)]: @"16 Bits"};
         default:
             return nil;
     }
@@ -156,10 +156,10 @@
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:@"default-black-and-white-threshold"];
     
     ICScannerBitDepth bitDepth = functionalUnit.bitDepth;
-    [readwrite setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
+    // [readwrite setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
     
     ICScannerMeasurementUnit measurementUnit = functionalUnit.measurementUnit;
-    [readwrite setObject:[self getMeasurementUnitOptions:measurementUnit] forKey:@"measurement-unit"];
+    // [readwrite setObject:[self getMeasurementUnitOptions:measurementUnit] forKey:@"measurement-unit"];
     
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeXResolution)] forKey:@"native-x-resolution"];
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeYResolution)] forKey:@"native-y-resolution"];
@@ -169,24 +169,33 @@
     [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.overviewResolution)] forKey:@"overview-resolution"];
 
     ICScannerPixelDataType pixelDataType = functionalUnit.pixelDataType;
-    [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:@"pixel-data-type"];
+    // [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:@"pixel-data-type"];
 
-    [readonly setObject:functionalUnit.preferredResolutions forKey:@"preferred-resolutions"];
+    // [readonly setObject:functionalUnit.preferredResolutions forKey:@"preferred-resolutions"];
 
-    [readonly setObject:functionalUnit.preferredScaleFactors forKey:@"preferred-scale-factors"];
+    // [readonly setObject:functionalUnit.preferredScaleFactors forKey:@"preferred-scale-factors"];
     
-    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
+    // [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
     
-    [readonly setObject:functionalUnit.supportedBitDepths forKey:@"supported-bit-depths"];
+    
+    NSMutableDictionary * supportedBitDepths = [[NSMutableDictionary alloc] init];
+    [functionalUnit.supportedBitDepths enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [supportedBitDepths addEntriesFromDictionary:[self getBitDepthOptions:idx]];
+    }];
+    [readonly setObject:supportedBitDepths forKey:@"supported-bit-depths"];
+    
+    
+    /*
     [readonly setObject:functionalUnit.supportedResolutions forKey:@"supported-resolutions"];
     [readonly setObject:functionalUnit.supportedScaleFactors forKey:@"supported-scale-factors"];
     [readonly setObject:functionalUnit.supportedMeasurementUnits forKey:@"supported-scale-factors"];
+    */
+    
+    // NSRect scanArea = functionalUnit.scanArea;
+    // [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
 
-    NSRect scanArea = functionalUnit.scanArea;
-    [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
-
-    ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
-    [readwrite setObject:[self getScanAreaOrientation:scanAreaOrientation] forKey:@"scan-area-orientation"];
+    // ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
+    // [readwrite setObject:[self getScanAreaOrientation:scanAreaOrientation] forKey:@"scan-area-orientation"];
     
     if ( ( functionalUnit.scanInProgress == NO ) && ( functionalUnit.overviewScanInProgress == NO ) )
     {

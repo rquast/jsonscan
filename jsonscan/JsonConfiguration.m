@@ -116,28 +116,28 @@
     
 }
 
-- (NSString*)getScanAreaOrientation:(ICEXIFOrientationType)scanAreaOrientation
+- (NSDictionary*)getScanAreaOrientation:(ICEXIFOrientationType)scanAreaOrientation
 {
     
     switch (scanAreaOrientation) {
         case ICEXIFOrientation1:
-            return @"Normal";
+            return @{[NSString stringWithFormat:@"%@", @(ICEXIFOrientation1)]: @"Normal"};
         case ICEXIFOrientation2:
-            return @"Flipped Horizontally";
+            return @{[NSString stringWithFormat:@"%@", @(ICEXIFOrientation2)]: @"Flipped Horizontally"};
         case ICEXIFOrientation3:
-            return @"Rotated 180";
+            return @{[NSString stringWithFormat:@"%@", @(ICEXIFOrientation3)]: @"Rotated 180"};
         case ICEXIFOrientation4:
-            return @"Flipped Vertically";
+            return @{[NSString stringWithFormat:@"%@", @(ICEXIFOrientation4)]: @"Flipped Vertically"};
         case ICEXIFOrientation5:
-            return @"Rotated 90 CCW and Flipped Vertically";
+            return @{[NSString stringWithFormat:@"%@", @(ICEXIFOrientation5)]: @"Rotated 90 CCW and Flipped Vertically"};
         case ICEXIFOrientation6:
-            return @"Rotated 90 CCW";
+            return @{[NSString stringWithFormat:@"%@", @(ICEXIFOrientation6)]: @"Rotated 90 CCW"};
         case ICEXIFOrientation7:
-            return @"Rotated 90 CW and Flipped Vertically";
+            return @{[NSString stringWithFormat:@"%@", @(ICEXIFOrientation7)]: @"Rotated 90 CW and Flipped Vertically"};
         case ICEXIFOrientation8:
-            return @"Rotated 90 CW";
+            return @{[NSString stringWithFormat:@"%@", @(ICEXIFOrientation8)]: @"Rotated 90 CW"};
         default:
-            return @"Not Available";
+            return nil;
     }
     
 }

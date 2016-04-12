@@ -126,6 +126,87 @@
     
 }
 
+
+- (NSDictionary*)getDocumentTypeOptions:(ICScannerDocumentType)documentType
+{
+    switch (documentType) {
+        case ICScannerDocumentTypeDefault:
+        case ICScannerDocumentTypeA4:
+        case ICScannerDocumentTypeB5:
+        case ICScannerDocumentTypeUSLetter:
+        case ICScannerDocumentTypeUSLegal:
+        case ICScannerDocumentTypeA5:
+        case ICScannerDocumentTypeISOB4:
+        case ICScannerDocumentTypeISOB6:
+        case ICScannerDocumentTypeUSLedger:
+        case ICScannerDocumentTypeUSExecutive:
+        case ICScannerDocumentTypeA3:
+        case ICScannerDocumentTypeISOB3:
+        case ICScannerDocumentTypeA6:
+        case ICScannerDocumentTypeC4:
+        case ICScannerDocumentTypeC5:
+        case ICScannerDocumentTypeC6:
+        case ICScannerDocumentType4A0:
+        case ICScannerDocumentType2A0:
+        case ICScannerDocumentTypeA0:
+        case ICScannerDocumentTypeA1:
+        case ICScannerDocumentTypeA2:
+        case ICScannerDocumentTypeA7:
+        case ICScannerDocumentTypeA8:
+        case ICScannerDocumentTypeA9:
+        case ICScannerDocumentType10:
+        case ICScannerDocumentTypeISOB0:
+        case ICScannerDocumentTypeISOB1:
+        case ICScannerDocumentTypeISOB2:
+        case ICScannerDocumentTypeISOB5:
+        case ICScannerDocumentTypeISOB7:
+        case ICScannerDocumentTypeISOB8:
+        case ICScannerDocumentTypeISOB9:
+        case ICScannerDocumentTypeISOB10:
+        case ICScannerDocumentTypeJISB0:
+        case ICScannerDocumentTypeJISB1:
+        case ICScannerDocumentTypeJISB2:
+        case ICScannerDocumentTypeJISB3:
+        case ICScannerDocumentTypeJISB4:
+        case ICScannerDocumentTypeJISB6:
+        case ICScannerDocumentTypeJISB7:
+        case ICScannerDocumentTypeJISB8:
+        case ICScannerDocumentTypeJISB9:
+        case ICScannerDocumentTypeJISB10:
+        case ICScannerDocumentTypeC0:
+        case ICScannerDocumentTypeC1:
+        case ICScannerDocumentTypeC2:
+        case ICScannerDocumentTypeC3:
+        case ICScannerDocumentTypeC7:
+        case ICScannerDocumentTypeC8:
+        case ICScannerDocumentTypeC9:
+        case ICScannerDocumentTypeC10:
+        case ICScannerDocumentTypeUSStatement:
+        case ICScannerDocumentTypeBusinessCard:
+        case ICScannerDocumentTypeE:
+        case ICScannerDocumentType3R:
+        case ICScannerDocumentType4R:
+        case ICScannerDocumentType5R:
+        case ICScannerDocumentType6R:
+        case ICScannerDocumentType8R:
+        case ICScannerDocumentTypeS8R:
+        case ICScannerDocumentType10R:
+        case ICScannerDocumentTypeS10R:
+        case ICScannerDocumentType11R:
+        case ICScannerDocumentType12R:
+        case ICScannerDocumentTypeS12R:
+        case ICScannerDocumentType110:
+        case ICScannerDocumentTypeAPSH:
+        case ICScannerDocumentTypeAPSC:
+        case ICScannerDocumentTypeAPSP:
+        case ICScannerDocumentType135:
+        case ICScannerDocumentTypeMF:
+        case ICScannerDocumentTypeLF:
+        default:
+            return nil;
+    }
+};
+
 - (NSDictionary*)getScanAreaOrientation:(ICEXIFOrientationType)scanAreaOrientation
 {
     
@@ -155,6 +236,12 @@
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
     
+    // TODO: Ordered Dictionary
+    
+    // TODO: Constant keys with descriptions.
+    
+    // TODO: functionalUnit.overviewImage
+    
     NSMutableDictionary * readonly = [[NSMutableDictionary alloc] init];
     NSMutableDictionary * readwrite = [[NSMutableDictionary alloc] init];
 
@@ -173,8 +260,6 @@
     
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeXResolution)] forKey:@"native-x-resolution"];
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeYResolution)] forKey:@"native-y-resolution"];
-    
-    // functionalUnit.overviewImage ???
     
     [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.overviewResolution)] forKey:@"overview-resolution"];
 
@@ -213,15 +298,14 @@
     ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
     [readwrite setObject:[self getScanAreaOrientation:scanAreaOrientation] forKey:@"scan-area-orientation"];
     
-    if ( ( functionalUnit.scanInProgress == NO ) && ( functionalUnit.overviewScanInProgress == NO ) )
-    {
-        if ( functionalUnit.type == ICScannerFunctionalUnitTypeDocumentFeeder )
-        {
+    if ((functionalUnit.scanInProgress == NO) && (functionalUnit.overviewScanInProgress == NO)) {
+        
+        if (functionalUnit.type == ICScannerFunctionalUnitTypeDocumentFeeder) {
+            
             ICScannerFunctionalUnitDocumentFeeder* dfu = (ICScannerFunctionalUnitDocumentFeeder*)functionalUnit;
             
             [readonly setObject:dfu.documentLoaded ? @"true": @"false" forKey:@"is-document-loaded"];
-            
-            // Can't access pointer of a property. This is a workaround.
+
             NSSize documentSize = dfu.documentSize;
             [readonly setObject:[self getSizeOptions:&documentSize] forKey:@"document-size"];
             
@@ -237,7 +321,8 @@
             [readwrite setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:@"resolution"];
             
             // IMPORTANT ONE.
-            // dfu.documentType
+            ICScannerDocumentType documentType = dfu.documentType;
+            
             
             // dfu.evenPageOrientation
             // dfu.oddPageOrientation
@@ -249,6 +334,7 @@
     }
     
     return [self serializeJSON:@{@"response": @"settings", @"read-only-settings": readonly, @"read-write-settings": readwrite}];
+    
 }
 
 @end

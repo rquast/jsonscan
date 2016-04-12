@@ -391,16 +391,18 @@
             [readonly setObject:dfu.supportsDuplexScanning ? @"true": @"false" forKey:@"supports-duplex-scanning"];
             
             [readwrite setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:@"resolution"];
-            
-            // IMPORTANT ONE.
+
             ICScannerDocumentType documentType = dfu.documentType;
+            [readwrite setObject:[self getDocumentTypeOptions:documentType] forKey:@"document-type"];
             
+            NSMutableDictionary * supportedDocumentTypes = [[NSMutableDictionary alloc] init];
+            [dfu.supportedDocumentTypes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+                [supportedDocumentTypes addEntriesFromDictionary:[self getDocumentTypeOptions:idx]];
+            }];
+            [readonly setObject:supportedDocumentTypes forKey:@"supported-document-types"];
             
             // dfu.evenPageOrientation
             // dfu.oddPageOrientation
-            
-            // IMPORTANT ONE.
-            // dfu.supportedDocumentTypes
 
         }
     }

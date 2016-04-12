@@ -66,6 +66,16 @@
 
 }
 
+- (NSDictionary*)getResolutionOptions:(NSUInteger)resolution
+{
+    return @{[NSString stringWithFormat:@"%@", @(resolution)]: [NSString stringWithFormat:@"%@ DPI", @(resolution)]};
+}
+
+- (NSDictionary*)getScaleFactorOptions:(NSUInteger)resolution
+{
+    return @{[NSString stringWithFormat:@"%@", @(resolution)]: [NSString stringWithFormat:@"%@%%", @(resolution)]};
+}
+
 - (NSDictionary*)getMeasurementUnitOptions:(ICScannerMeasurementUnit)measurementUnit
 {
     
@@ -170,13 +180,8 @@
 
     ICScannerPixelDataType pixelDataType = functionalUnit.pixelDataType;
     [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:@"pixel-data-type"];
-
-    // [readonly setObject:functionalUnit.preferredResolutions forKey:@"preferred-resolutions"];
-
-    // [readonly setObject:functionalUnit.preferredScaleFactors forKey:@"preferred-scale-factors"];
     
     [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
-    
     
     NSMutableDictionary * supportedBitDepths = [[NSMutableDictionary alloc] init];
     [functionalUnit.supportedBitDepths enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
@@ -184,20 +189,23 @@
     }];
     [readonly setObject:supportedBitDepths forKey:@"supported-bit-depths"];
     
-    
-    /*
-    NSMutableDictionary * supportedResolutions = [[NSMutableDictionary alloc] init];
-    [functionalUnit.supportedResolutions enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [supportedResolutions addEntriesFromDictionary:[self getBitDepthOptions:idx]]; // TODO: change this to a new getResolutionOptions.
+    NSMutableDictionary * preferredResolutions = [[NSMutableDictionary alloc] init];
+    [functionalUnit.preferredResolutions enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [preferredResolutions addEntriesFromDictionary:[self getResolutionOptions:idx]];
     }];
-    [readonly setObject:supportedResolutions forKey:@"supported-resolutions"];
-    */
+    [readonly setObject:preferredResolutions forKey:@"preferred-resolutions"];
     
+    NSMutableDictionary * preferredScaleFactors = [[NSMutableDictionary alloc] init];
+    [functionalUnit.preferredScaleFactors enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [preferredResolutions addEntriesFromDictionary:[self getScaleFactorOptions:idx]];
+    }];
+    [readonly setObject:preferredScaleFactors forKey:@"preferred-scale-factors"];
     
-    /*
-    [readonly setObject:functionalUnit.supportedScaleFactors forKey:@"supported-scale-factors"];
-    [readonly setObject:functionalUnit.supportedMeasurementUnits forKey:@"supported-scale-factors"];
-    */
+    NSMutableDictionary * supportedMeasurementUnits = [[NSMutableDictionary alloc] init];
+    [functionalUnit.supportedMeasurementUnits enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [preferredResolutions addEntriesFromDictionary:[self getMeasurementUnitOptions:idx]];
+    }];
+    [readonly setObject:supportedMeasurementUnits forKey:@"supported-measurement-units"];
     
     NSRect scanArea = functionalUnit.scanArea;
     [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];

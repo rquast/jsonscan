@@ -131,77 +131,149 @@
 {
     switch (documentType) {
         case ICScannerDocumentTypeDefault:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeDefault)]: @"Default"};
         case ICScannerDocumentTypeA4:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA4)]: @"A4"};
         case ICScannerDocumentTypeB5:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeB5)]: @"B5"};
         case ICScannerDocumentTypeUSLetter:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeUSLetter)]: @"US Letter"};
         case ICScannerDocumentTypeUSLegal:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeUSLegal)]: @"US Legal"};
         case ICScannerDocumentTypeA5:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA5)]: @"A5"};
         case ICScannerDocumentTypeISOB4:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB4)]: @"ISO B4"};
         case ICScannerDocumentTypeISOB6:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB6)]: @"ISO B6"};
         case ICScannerDocumentTypeUSLedger:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeUSLedger)]: @"US Ledger"};
         case ICScannerDocumentTypeUSExecutive:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeUSExecutive)]: @"US Executive"};
         case ICScannerDocumentTypeA3:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA3)]: @"A3"};
         case ICScannerDocumentTypeISOB3:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB3)]: @"ISO B3"};
         case ICScannerDocumentTypeA6:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA6)]: @"A6"};
         case ICScannerDocumentTypeC4:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC4)]: @"C4"};
         case ICScannerDocumentTypeC5:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC5)]: @"C5"};
         case ICScannerDocumentTypeC6:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC6)]: @"C6"};
         case ICScannerDocumentType4A0:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType4A0)]: @"4A0"};
         case ICScannerDocumentType2A0:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType2A0)]: @"2A0"};
         case ICScannerDocumentTypeA0:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA0)]: @"A0"};
         case ICScannerDocumentTypeA1:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA1)]: @"A1"};
         case ICScannerDocumentTypeA2:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA2)]: @"A2"};
         case ICScannerDocumentTypeA7:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA7)]: @"A7"};
         case ICScannerDocumentTypeA8:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA8)]: @"A8"};
         case ICScannerDocumentTypeA9:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeA9)]: @"A9"};
         case ICScannerDocumentType10:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType10)]: @"A10"};
         case ICScannerDocumentTypeISOB0:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB0)]: @"ISO B0"};
         case ICScannerDocumentTypeISOB1:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB1)]: @"ISO B1"};
         case ICScannerDocumentTypeISOB2:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB2)]: @"ISO B2"};
         case ICScannerDocumentTypeISOB5:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB5)]: @"ISO B5"};
         case ICScannerDocumentTypeISOB7:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB7)]: @"ISO B7"};
         case ICScannerDocumentTypeISOB8:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB8)]: @"ISO B8"};
         case ICScannerDocumentTypeISOB9:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB9)]: @"ISO B9"};
         case ICScannerDocumentTypeISOB10:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeISOB10)]: @"ISO B10"};
         case ICScannerDocumentTypeJISB0:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB0)]: @"JIS B0"};
         case ICScannerDocumentTypeJISB1:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB1)]: @"JIS B1"};
         case ICScannerDocumentTypeJISB2:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB2)]: @"JIS B2"};
         case ICScannerDocumentTypeJISB3:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB3)]: @"JIS B3"};
         case ICScannerDocumentTypeJISB4:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB4)]: @"JIS B4"};
         case ICScannerDocumentTypeJISB6:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB6)]: @"JIS B6"};
         case ICScannerDocumentTypeJISB7:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB7)]: @"JIS B7"};
         case ICScannerDocumentTypeJISB8:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB8)]: @"JIS B8"};
         case ICScannerDocumentTypeJISB9:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB9)]: @"JIS B9"};
         case ICScannerDocumentTypeJISB10:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeJISB10)]: @"JIS B10"};
         case ICScannerDocumentTypeC0:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC0)]: @"C0"};
         case ICScannerDocumentTypeC1:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC1)]: @"C1"};
         case ICScannerDocumentTypeC2:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC2)]: @"C2"};
         case ICScannerDocumentTypeC3:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC3)]: @"C3"};
         case ICScannerDocumentTypeC7:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC7)]: @"C7"};
         case ICScannerDocumentTypeC8:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC8)]: @"C8"};
         case ICScannerDocumentTypeC9:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC9)]: @"C9"};
         case ICScannerDocumentTypeC10:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeC10)]: @"C10"};
         case ICScannerDocumentTypeUSStatement:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeUSStatement)]: @"US Statement"};
         case ICScannerDocumentTypeBusinessCard:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeBusinessCard)]: @"Business Card"};
         case ICScannerDocumentTypeE:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeE)]: @"E"};
         case ICScannerDocumentType3R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType3R)]: @"3R"};
         case ICScannerDocumentType4R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType4R)]: @"4R"};
         case ICScannerDocumentType5R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType5R)]: @"5R"};
         case ICScannerDocumentType6R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType6R)]: @"6R"};
         case ICScannerDocumentType8R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType8R)]: @"8R"};
         case ICScannerDocumentTypeS8R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeS8R)]: @"S8R"};
         case ICScannerDocumentType10R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType10R)]: @"10R"};
         case ICScannerDocumentTypeS10R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeS10R)]: @"S10R"};
         case ICScannerDocumentType11R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType11R)]: @"11R"};
         case ICScannerDocumentType12R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType12R)]: @"12R"};
         case ICScannerDocumentTypeS12R:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeS12R)]: @"S12R"};
         case ICScannerDocumentType110:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType110)]: @"110"};
         case ICScannerDocumentTypeAPSH:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeAPSH)]: @"APSH"};
         case ICScannerDocumentTypeAPSC:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeAPSC)]: @"APSC"};
         case ICScannerDocumentTypeAPSP:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeAPSP)]: @"APSP"};
         case ICScannerDocumentType135:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentType135)]: @"135"};
         case ICScannerDocumentTypeMF:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeMF)]: @"MF"};
         case ICScannerDocumentTypeLF:
+            return @{[NSString stringWithFormat:@"%@", @(ICScannerDocumentTypeLF)]: @"LF"};
         default:
             return nil;
     }

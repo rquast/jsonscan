@@ -1,6 +1,8 @@
 #import <Cocoa/Cocoa.h>
 #import <ImageCaptureCore/ImageCaptureCore.h>
 
+#import "OrderedDictionary.h"
+
 @interface JsonConfiguration : NSObject
 
 @property (strong) NSDictionary *action;

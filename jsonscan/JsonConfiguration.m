@@ -40,14 +40,26 @@
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
-- (NSDictionary*)getSizeOptions:(NSSize*)size
+- (MutableOrderedDictionary*)getSizeOptions:(NSSize*)size
 {
-    return @{@"width": [NSString stringWithFormat:@"%@", @(size->width)], @"height": [NSString stringWithFormat:@"%@", @(size->height)]};
+    
+    MutableOrderedDictionary * d = [[MutableOrderedDictionary alloc] init];
+    [d setObject:[NSString stringWithFormat:@"%@", @(size->width)] forKey:@"width"];
+    [d setObject:[NSString stringWithFormat:@"%@", @(size->height)] forKey:@"height"];
+    return d;
+    
 }
 
-- (NSDictionary*)getRectOptions:(NSRect*)rect
+- (MutableOrderedDictionary*)getRectOptions:(NSRect*)rect
 {
-    return @{@"x": [NSString stringWithFormat:@"%@", @(rect->origin.x)], @"y": [NSString stringWithFormat:@"%@", @(rect->origin.y)],  @"width": [NSString stringWithFormat:@"%@", @(rect->size.width)], @"height": [NSString stringWithFormat:@"%@", @(rect->size.height)]};
+    
+    MutableOrderedDictionary * d = [[MutableOrderedDictionary alloc] init];
+    [d setObject:[NSString stringWithFormat:@"%@", @(rect->origin.x)] forKey:@"x"];
+    [d setObject:[NSString stringWithFormat:@"%@", @(rect->origin.y)] forKey:@"y"];
+    [d setObject:[NSString stringWithFormat:@"%@", @(rect->size.width)] forKey:@"width"];
+    [d setObject:[NSString stringWithFormat:@"%@", @(rect->size.height)] forKey:@"height"];
+    return d;
+    
 }
 
 - (NSDictionary*)getBitDepthOptions:(ICScannerBitDepth)bitDepth
@@ -279,7 +291,7 @@
     }
 };
 
-- (NSDictionary*)getScanAreaOrientation:(ICEXIFOrientationType)scanAreaOrientation
+- (NSDictionary*)getOrientationOptions:(ICEXIFOrientationType)scanAreaOrientation
 {
     
     switch (scanAreaOrientation) {
@@ -308,14 +320,12 @@
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
     
-    // TODO: Ordered Dictionary
-    
     // TODO: Constant keys with descriptions.
     
     // TODO: functionalUnit.overviewImage
     
-    NSMutableDictionary * readonly = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary * readwrite = [[NSMutableDictionary alloc] init];
+    MutableOrderedDictionary * readonly = [[MutableOrderedDictionary alloc] init];
+    MutableOrderedDictionary * readwrite = [[MutableOrderedDictionary alloc] init];
 
     [readonly setObject:functionalUnit.acceptsThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"can-use-black-white-threshold"];
     [readonly setObject:functionalUnit.canPerformOverviewScan ? @"true": @"false" forKey:@"can-perform-overview-scan"];
@@ -368,7 +378,7 @@
     [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
 
     ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
-    [readwrite setObject:[self getScanAreaOrientation:scanAreaOrientation] forKey:@"scan-area-orientation"];
+    [readwrite setObject:[self getOrientationOptions:scanAreaOrientation] forKey:@"scan-area-orientation"];
     
     if ((functionalUnit.scanInProgress == NO) && (functionalUnit.overviewScanInProgress == NO)) {
         
@@ -401,8 +411,11 @@
             }];
             [readonly setObject:supportedDocumentTypes forKey:@"supported-document-types"];
             
-            // dfu.evenPageOrientation
-            // dfu.oddPageOrientation
+            ICEXIFOrientationType evenPageOrientation = dfu.evenPageOrientation;
+            [readwrite setObject:[self getOrientationOptions:evenPageOrientation] forKey:@"even-page-orientation"];
+
+            ICEXIFOrientationType oddPageOrientation = dfu.oddPageOrientation;
+            [readwrite setObject:[self getOrientationOptions:oddPageOrientation] forKey:@"odd-page-orientation"];
 
         }
     }

@@ -10,6 +10,7 @@
 		44BF23AF1CB4AB350043D8DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23AE1CB4AB350043D8DD /* main.m */; };
 		44BF23B61CB4AC160043D8DD /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23B51CB4AC160043D8DD /* AppController.m */; };
 		44BF23BD1CB60C110043D8DD /* JsonConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BF23BC1CB60C110043D8DD /* JsonConfiguration.m */; };
+		44C8F1EE1CBDB0F800805B5D /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8F1ED1CBDB0F800805B5D /* OrderedDictionary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,8 @@
 		44BF23BA1CB4DD690043D8DD /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		44BF23BB1CB60B950043D8DD /* JsonConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JsonConfiguration.h; sourceTree = "<group>"; };
 		44BF23BC1CB60C110043D8DD /* JsonConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonConfiguration.m; sourceTree = "<group>"; };
+		44C8F1EC1CBDB0F800805B5D /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
+		44C8F1ED1CBDB0F800805B5D /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 		44BF23AD1CB4AB350043D8DD /* jsonscan */ = {
 			isa = PBXGroup;
 			children = (
+				44C8F1EC1CBDB0F800805B5D /* OrderedDictionary.h */,
+				44C8F1ED1CBDB0F800805B5D /* OrderedDictionary.m */,
 				44BF23B71CB4AC3C0043D8DD /* AppController.h */,
 				44BF23AE1CB4AB350043D8DD /* main.m */,
 				44BF23B51CB4AC160043D8DD /* AppController.m */,
@@ -133,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44BF23BD1CB60C110043D8DD /* JsonConfiguration.m in Sources */,
+				44C8F1EE1CBDB0F800805B5D /* OrderedDictionary.m in Sources */,
 				44BF23AF1CB4AB350043D8DD /* main.m in Sources */,
 				44BF23B61CB4AC160043D8DD /* AppController.m in Sources */,
 			);

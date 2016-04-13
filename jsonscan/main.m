@@ -10,15 +10,34 @@ int main (int argc, const char * argv[])
     @autoreleasepool {
         
         AppController* appController = [[AppController alloc] init];
-
-            
+        
         NSString *inputString;
         
         if (argc == 2 && [[NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding] isEqualToString:@"-h"]) {
             
             NSDictionary * options = [JsonConfiguration getOptions];
+            NSArray * keys = [options allKeys];
             
-            // TODO: display options usage.
+            NSLog(@"All setting keys and descriptions for jsonscan:");
+            NSLog(@"");
+            
+            for (id object in keys) {
+                
+                NSDictionary * setting = [options objectForKey:object];
+                
+                NSLog(@"----------------------------------------");
+                NSLog(@"Setting: %@", object);
+                NSLog(@"Description: %@", setting.description);
+                NSString * setter = [setting objectForKey:@"setter"];
+                if (setter) {
+                    NSLog(@"Setter: %@", setter);
+                }
+                NSString * see = [setting objectForKey:@"see"];
+                if (see) {
+                    NSLog(@"See: %@", see);
+                }
+                
+            }
             
         } else if (argc == 2 && [[NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding] isEqualToString:@"-l"]) {
             

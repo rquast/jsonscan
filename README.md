@@ -8,7 +8,7 @@ The purpose of JSONScan is to make it easy for languages, other than objective-c
 
 JSONScan is a fork of [scanline](https://github.com/klep/scanline).
 
-[OrderedDictionary] https://github.com/nicklockwood/OrderedDictionary is used for the JSON output, to get around the abscence of ordered key-value list classes in Cocoa/ObjC.
+[OrderedDictionary](https://github.com/nicklockwood/OrderedDictionary) is used for the JSON output, to get around the abscence of ordered key-value list classes in Cocoa/ObjC.
 
 ## Usage
 

@@ -50,7 +50,7 @@
 - (NSString*)serializeJSON:(NSDictionary*)dictionary
 {
     NSError * error = nil;
-    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&error];
+    NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&error];
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 

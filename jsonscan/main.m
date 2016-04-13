@@ -27,7 +27,10 @@ int main (int argc, const char * argv[])
                 
                 NSLog(@"----------------------------------------");
                 NSLog(@"Setting: %@", object);
-                NSLog(@"Description: %@", setting.description);
+                NSString * description = [setting objectForKey:@"description"];
+                if (description) {
+                   NSLog(@"Description: %@", description);
+                }
                 NSString * setter = [setting objectForKey:@"setter"];
                 if (setter) {
                     NSLog(@"Setter: %@", setter);

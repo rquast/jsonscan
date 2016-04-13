@@ -336,11 +336,12 @@
     return value ? @"true" : @"false";
 }
 
-- (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
+- (MutableOrderedDictionary*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
     
     // TODO: functionalUnit.overviewImage
     
+    MutableOrderedDictionary * d = [[MutableOrderedDictionary alloc] init];
     MutableOrderedDictionary * readonly = [[MutableOrderedDictionary alloc] init];
     MutableOrderedDictionary * readwrite = [[MutableOrderedDictionary alloc] init];
 
@@ -370,27 +371,27 @@
     
     [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
     
-    NSMutableDictionary * supportedBitDepths = [[NSMutableDictionary alloc] init];
+    MutableOrderedDictionary * supportedBitDepths = [[MutableOrderedDictionary alloc] init];
     [functionalUnit.supportedBitDepths enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         [supportedBitDepths addEntriesFromDictionary:[self getBitDepthOptions:idx]];
     }];
     [readonly setObject:supportedBitDepths forKey:@"supported-bit-depths"];
     
-    NSMutableDictionary * preferredResolutions = [[NSMutableDictionary alloc] init];
+    MutableOrderedDictionary * preferredResolutions = [[MutableOrderedDictionary alloc] init];
     [functionalUnit.preferredResolutions enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         [preferredResolutions addEntriesFromDictionary:[self getResolutionOptions:idx]];
     }];
     [readonly setObject:preferredResolutions forKey:@"preferred-resolutions"];
     
-    NSMutableDictionary * preferredScaleFactors = [[NSMutableDictionary alloc] init];
+    MutableOrderedDictionary * preferredScaleFactors = [[MutableOrderedDictionary alloc] init];
     [functionalUnit.preferredScaleFactors enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [preferredResolutions addEntriesFromDictionary:[self getScaleFactorOptions:idx]];
+        [preferredScaleFactors addEntriesFromDictionary:[self getScaleFactorOptions:idx]];
     }];
     [readonly setObject:preferredScaleFactors forKey:@"preferred-scale-factors"];
     
-    NSMutableDictionary * supportedMeasurementUnits = [[NSMutableDictionary alloc] init];
+    MutableOrderedDictionary * supportedMeasurementUnits = [[MutableOrderedDictionary alloc] init];
     [functionalUnit.supportedMeasurementUnits enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [preferredResolutions addEntriesFromDictionary:[self getMeasurementUnitOptions:idx]];
+        [supportedMeasurementUnits addEntriesFromDictionary:[self getMeasurementUnitOptions:idx]];
     }];
     [readonly setObject:supportedMeasurementUnits forKey:@"supported-measurement-units"];
     
@@ -425,7 +426,7 @@
             ICScannerDocumentType documentType = dfu.documentType;
             [readwrite setObject:[self getDocumentTypeOptions:documentType] forKey:@"document-type"];
             
-            NSMutableDictionary * supportedDocumentTypes = [[NSMutableDictionary alloc] init];
+            MutableOrderedDictionary * supportedDocumentTypes = [[MutableOrderedDictionary alloc] init];
             [dfu.supportedDocumentTypes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
                 [supportedDocumentTypes addEntriesFromDictionary:[self getDocumentTypeOptions:idx]];
             }];
@@ -440,7 +441,11 @@
         }
     }
     
-    return [self serializeJSON:@{@"response": @"settings", @"read-only-settings": readonly, @"read-write-settings": readwrite}];
+    [d setObject:@"settings" forKey:@"response"];
+    [d setObject:readonly forKey:@"read-only-settings"];
+    [d setObject:readwrite forKey:@"read-write-settings"];
+    
+    return d;
     
 }
 

@@ -156,7 +156,7 @@
         
         ICScannerDevice * scanner = [self selectedScanner];
         ICScannerFunctionalUnit * fu = scanner.selectedFunctionalUnit;
-        NSString * scannerOptionsJson = [mConfiguration getScannerOptions:fu];
+        NSString * scannerOptionsJson = [mConfiguration serializeJSON:[mConfiguration getScannerOptions:fu]];
         NSLog(@"%@", scannerOptionsJson);
         
         [self exit];

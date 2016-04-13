@@ -15,7 +15,7 @@ static NSString * const JSCOptionThresholdForBlackAndWhiteScanning = @"threshold
 
 - (void)parseJSON:(NSString*)jsonString;
 - (NSString*)serializeJSON:(NSDictionary*)dictionary;
-- (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit;
+- (MutableOrderedDictionary*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit;
 - (NSDictionary*)getSizeOptions:(NSSize*)size;
 
 @end

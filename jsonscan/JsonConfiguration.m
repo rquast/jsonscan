@@ -9,14 +9,28 @@
     self = [super init];
     if (self)
     {
-        _action = [JsonConfiguration defaultAction];
+        _options = [JsonConfiguration getOptions];
     }
     return self;
 }
 
-+ (NSDictionary*)defaultAction
++ (NSDictionary*)getOptions
 {
-    return @{@"action": @"list"};
+    
+    // TODO: Make these options displayable from the CLI.
+    
+    return @{
+             JSCOptionCanUseBlackWhiteThreshold: @{
+                     @"setter": JSCOptionUseBlackWhiteThreshold,
+                     @"description": @"Convert images to black & white using a threshold value.",
+                     @"see": JSCOptionDefaultBlackWhiteThreshold
+             },
+             JSCOptionDefaultBlackWhiteThreshold: @{
+                     @"setter": JSCOptionThresholdForBlackAndWhiteScanning,
+                     @"description": @"A range from 0 to 255 for the black and white scanning conversion threshold.",
+                     @"see": JSCOptionCanUseBlackWhiteThreshold
+             }
+    };
 }
 
 - (void)parseJSON:(NSString*)jsonString
@@ -317,22 +331,28 @@
     
 }
 
+- (NSString*)getBoolString:(BOOL)value
+{
+    return value ? @"true" : @"false";
+}
+
 - (NSString*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
-    
-    // TODO: Constant keys with descriptions.
     
     // TODO: functionalUnit.overviewImage
     
     MutableOrderedDictionary * readonly = [[MutableOrderedDictionary alloc] init];
     MutableOrderedDictionary * readwrite = [[MutableOrderedDictionary alloc] init];
 
-    [readonly setObject:functionalUnit.acceptsThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"can-use-black-white-threshold"];
-    [readonly setObject:functionalUnit.canPerformOverviewScan ? @"true": @"false" forKey:@"can-perform-overview-scan"];
+    [readonly setObject:[self getBoolString: functionalUnit.acceptsThresholdForBlackAndWhiteScanning] forKey:JSCOptionCanUseBlackWhiteThreshold];
     
-    [readonly setObject:functionalUnit.usesThresholdForBlackAndWhiteScanning ? @"true": @"false" forKey:@"use-back-white-threshold"];
+    [readonly setObject:[self getBoolString: functionalUnit.usesThresholdForBlackAndWhiteScanning] forKey:JSCOptionUseBlackWhiteThreshold];
     
-    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:@"default-black-and-white-threshold"];
+    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:JSCOptionDefaultBlackWhiteThreshold];
+    
+    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.thresholdForBlackAndWhiteScanning)] forKey:JSCOptionThresholdForBlackAndWhiteScanning];
+    
+    [readonly setObject:[self getBoolString: functionalUnit.canPerformOverviewScan] forKey:@"can-perform-overview-scan"];
     
     ICScannerBitDepth bitDepth = functionalUnit.bitDepth;
     [readwrite setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
@@ -386,7 +406,7 @@
             
             ICScannerFunctionalUnitDocumentFeeder* dfu = (ICScannerFunctionalUnitDocumentFeeder*)functionalUnit;
             
-            [readonly setObject:dfu.documentLoaded ? @"true": @"false" forKey:@"is-document-loaded"];
+            [readonly setObject:[self getBoolString: dfu.documentLoaded] forKey:@"is-document-loaded"];
 
             NSSize documentSize = dfu.documentSize;
             [readonly setObject:[self getSizeOptions:&documentSize] forKey:@"document-size"];
@@ -394,11 +414,11 @@
             NSSize physicalSize = dfu.physicalSize;
             [readonly setObject:[self getSizeOptions:&physicalSize] forKey:@"physical-size"];
             
-            [readwrite setObject:dfu.duplexScanningEnabled ? @"true": @"false" forKey:@"is-duplex-scanning-enabled"];
+            [readwrite setObject:[self getBoolString: dfu.duplexScanningEnabled] forKey:@"is-duplex-scanning-enabled"];
             
-            [readonly setObject:dfu.reverseFeederPageOrder ? @"true": @"false" forKey:@"is-reverse-feeder-page-order"];
+            [readonly setObject:[self getBoolString: dfu.reverseFeederPageOrder] forKey:@"is-reverse-feeder-page-order"];
             
-            [readonly setObject:dfu.supportsDuplexScanning ? @"true": @"false" forKey:@"supports-duplex-scanning"];
+            [readonly setObject:[self getBoolString: dfu.supportsDuplexScanning] forKey:@"supports-duplex-scanning"];
             
             [readwrite setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:@"resolution"];
 

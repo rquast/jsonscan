@@ -134,6 +134,7 @@
 - (void)device:(ICDevice*)device didEncounterError:(NSError*)error
 {
     NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+    [self exit];
 }
 
 - (void)device:(ICDevice*)device didReceiveButtonPress:(NSString*)button

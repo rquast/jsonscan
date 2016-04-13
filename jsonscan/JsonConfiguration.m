@@ -17,8 +17,6 @@
 + (NSDictionary*)getOptions
 {
     
-    // TODO: Make these options displayable from the CLI.
-    
     return @{
              JSCOptionCanUseBlackWhiteThreshold: @{
                      @"setter": JSCOptionUseBlackWhiteThreshold,
@@ -31,6 +29,7 @@
                      @"see": JSCOptionCanUseBlackWhiteThreshold
              }
     };
+    
 }
 
 - (void)parseJSON:(NSString*)jsonString
@@ -374,53 +373,53 @@
     
     [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.thresholdForBlackAndWhiteScanning)] forKey:JSCOptionThresholdForBlackAndWhiteScanning];
     
-    [readonly setObject:[self getBoolString: functionalUnit.canPerformOverviewScan] forKey:@"can-perform-overview-scan"];
+    [readonly setObject:[self getBoolString: functionalUnit.canPerformOverviewScan] forKey:JSCCanPerformOverviewScan];
     
     ICScannerBitDepth bitDepth = functionalUnit.bitDepth;
-    [readwrite setObject:[self getBitDepthOptions:bitDepth] forKey:@"bit-depth"];
+    [readwrite setObject:[self getBitDepthOptions:bitDepth] forKey:JSCBitDepth];
     
     ICScannerMeasurementUnit measurementUnit = functionalUnit.measurementUnit;
-    [readwrite setObject:[self getMeasurementUnitOptions:measurementUnit] forKey:@"measurement-unit"];
+    [readwrite setObject:[self getMeasurementUnitOptions:measurementUnit] forKey:JSCMeasurementUnit];
     
-    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeXResolution)] forKey:@"native-x-resolution"];
-    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeYResolution)] forKey:@"native-y-resolution"];
+    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeXResolution)] forKey:JSCNativeXResolution];
+    [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.nativeYResolution)] forKey:JSCNativeYResolution];
     
-    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.overviewResolution)] forKey:@"overview-resolution"];
+    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.overviewResolution)] forKey:JSCOverviewResolution];
 
     ICScannerPixelDataType pixelDataType = functionalUnit.pixelDataType;
-    [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:@"pixel-data-type"];
+    [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:JSCPixelDataType];
     
-    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:@"scale-factor"];
+    [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:JSCScaleFactor];
     
     MutableOrderedDictionary * supportedBitDepths = [[MutableOrderedDictionary alloc] init];
     [functionalUnit.supportedBitDepths enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         [supportedBitDepths addEntriesFromDictionary:[self getBitDepthOptions:idx]];
     }];
-    [readonly setObject:supportedBitDepths forKey:@"supported-bit-depths"];
+    [readonly setObject:supportedBitDepths forKey:JSCSupportedBitDepths];
     
     MutableOrderedDictionary * preferredResolutions = [[MutableOrderedDictionary alloc] init];
     [functionalUnit.preferredResolutions enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         [preferredResolutions addEntriesFromDictionary:[self getResolutionOptions:idx]];
     }];
-    [readonly setObject:preferredResolutions forKey:@"preferred-resolutions"];
+    [readonly setObject:preferredResolutions forKey:JSCPreferredResolutions];
     
     MutableOrderedDictionary * preferredScaleFactors = [[MutableOrderedDictionary alloc] init];
     [functionalUnit.preferredScaleFactors enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         [preferredScaleFactors addEntriesFromDictionary:[self getScaleFactorOptions:idx]];
     }];
-    [readonly setObject:preferredScaleFactors forKey:@"preferred-scale-factors"];
+    [readonly setObject:preferredScaleFactors forKey:JSCPreferredScaleFactors];
     
     MutableOrderedDictionary * supportedMeasurementUnits = [[MutableOrderedDictionary alloc] init];
     [functionalUnit.supportedMeasurementUnits enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         [supportedMeasurementUnits addEntriesFromDictionary:[self getMeasurementUnitOptions:idx]];
     }];
-    [readonly setObject:supportedMeasurementUnits forKey:@"supported-measurement-units"];
+    [readonly setObject:supportedMeasurementUnits forKey:JSCSupportedMeasurementUnits];
     
     NSRect scanArea = functionalUnit.scanArea;
-    [readwrite setObject:[self getRectOptions:&scanArea] forKey:@"scan-area"];
+    [readwrite setObject:[self getRectOptions:&scanArea] forKey:JSCScanArea];
 
     ICEXIFOrientationType scanAreaOrientation = functionalUnit.scanAreaOrientation;
-    [readwrite setObject:[self getOrientationOptions:scanAreaOrientation] forKey:@"scan-area-orientation"];
+    [readwrite setObject:[self getOrientationOptions:scanAreaOrientation] forKey:JSCScanAreaOrientation];
     
     if ((functionalUnit.scanInProgress == NO) && (functionalUnit.overviewScanInProgress == NO)) {
         
@@ -428,38 +427,39 @@
             
             ICScannerFunctionalUnitDocumentFeeder* dfu = (ICScannerFunctionalUnitDocumentFeeder*)functionalUnit;
             
-            [readonly setObject:[self getBoolString: dfu.documentLoaded] forKey:@"is-document-loaded"];
+            [readonly setObject:[self getBoolString: dfu.documentLoaded] forKey:JSCIsDocumentLoaded];
 
             NSSize documentSize = dfu.documentSize;
-            [readonly setObject:[self getSizeOptions:&documentSize] forKey:@"document-size"];
+            [readonly setObject:[self getSizeOptions:&documentSize] forKey:JSCDocumentSize];
             
             NSSize physicalSize = dfu.physicalSize;
-            [readonly setObject:[self getSizeOptions:&physicalSize] forKey:@"physical-size"];
+            [readonly setObject:[self getSizeOptions:&physicalSize] forKey:JSCPhysicalSize];
             
-            [readwrite setObject:[self getBoolString: dfu.duplexScanningEnabled] forKey:@"is-duplex-scanning-enabled"];
+            [readwrite setObject:[self getBoolString: dfu.duplexScanningEnabled] forKey:JSCIsDuplexScanningEnabled];
             
-            [readonly setObject:[self getBoolString: dfu.reverseFeederPageOrder] forKey:@"is-reverse-feeder-page-order"];
+            [readonly setObject:[self getBoolString: dfu.reverseFeederPageOrder] forKey:JSCIsReverseFeederPageOrder];
             
-            [readonly setObject:[self getBoolString: dfu.supportsDuplexScanning] forKey:@"supports-duplex-scanning"];
+            [readonly setObject:[self getBoolString: dfu.supportsDuplexScanning] forKey:JSCSupportsDuplexScanning];
             
-            [readwrite setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:@"resolution"];
+            [readwrite setObject:[NSString stringWithFormat:@"%@", @(dfu.resolution)] forKey:JSCResolution];
 
             ICScannerDocumentType documentType = dfu.documentType;
-            [readwrite setObject:[self getDocumentTypeOptions:documentType] forKey:@"document-type"];
+            [readwrite setObject:[self getDocumentTypeOptions:documentType] forKey:JSCDocumentType];
             
             MutableOrderedDictionary * supportedDocumentTypes = [[MutableOrderedDictionary alloc] init];
             [dfu.supportedDocumentTypes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
                 [supportedDocumentTypes addEntriesFromDictionary:[self getDocumentTypeOptions:idx]];
             }];
-            [readonly setObject:supportedDocumentTypes forKey:@"supported-document-types"];
+            [readonly setObject:supportedDocumentTypes forKey:JSCDocumentType];
             
             ICEXIFOrientationType evenPageOrientation = dfu.evenPageOrientation;
-            [readwrite setObject:[self getOrientationOptions:evenPageOrientation] forKey:@"even-page-orientation"];
+            [readwrite setObject:[self getOrientationOptions:evenPageOrientation] forKey:JSCEvenPageOrientation];
 
             ICEXIFOrientationType oddPageOrientation = dfu.oddPageOrientation;
-            [readwrite setObject:[self getOrientationOptions:oddPageOrientation] forKey:@"odd-page-orientation"];
+            [readwrite setObject:[self getOrientationOptions:oddPageOrientation] forKey:JSCOddPageOrientation];
 
         }
+        
     }
     
     [d setObject:@"settings" forKey:@"response"];

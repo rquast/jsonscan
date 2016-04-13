@@ -241,6 +241,8 @@
     ICScannerDevice * scanner = [self selectedScanner];
     ICScannerFunctionalUnit * fu = scanner.selectedFunctionalUnit;
     
+    [mConfiguration setScannerOptions:[mConfiguration.action objectForKey:@"settings"] functionalUnit:fu];
+    
     if ( ( fu.scanInProgress == NO ) && ( fu.overviewScanInProgress == NO ) )
     {
         if ( fu.type == ICScannerFunctionalUnitTypeDocumentFeeder )

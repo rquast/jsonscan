@@ -336,6 +336,27 @@
     return value ? @"true" : @"false";
 }
 
+- (void)setScannerOptions:(NSDictionary*)scannerOptions functionalUnit:(ICScannerFunctionalUnit*)functionalUnit
+{
+    if (scannerOptions == nil) {
+        return;
+    }
+    
+    // TODO: Set the scanner options.
+    
+    if ([scannerOptions objectForKey:JSCOptionUseBlackWhiteThreshold]) {
+        functionalUnit.usesThresholdForBlackAndWhiteScanning = YES;
+    }
+    
+    if (functionalUnit.type == ICScannerFunctionalUnitTypeDocumentFeeder) {
+        
+        ICScannerFunctionalUnitDocumentFeeder* dfu = (ICScannerFunctionalUnitDocumentFeeder*)functionalUnit;
+        
+        
+    }
+    
+}
+
 - (MutableOrderedDictionary*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
 {
     

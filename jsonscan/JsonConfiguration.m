@@ -18,17 +18,116 @@
 {
     
     return @{
+             
+             JSCIsDocumentLoaded: @{
+                     @"description": @"Is there a page loaded in the document feeder?",
+                     },
+             JSCIsDuplexScanningEnabled: @{
+                     @"description": @"Is double-sided scanning (duplex) enabled?",
+                     @"see": JSCSupportsDuplexScanning
+                     },
+             JSCIsReverseFeederPageOrder: @{
+                     @"description": @"Does the document feeder support reading pages from back to front?",
+                     },
+             JSCSupportsDuplexScanning: @{
+                     @"description": @"Does this device support double-sided scanning?",
+                     @"see": JSCIsDuplexScanningEnabled
+                     },
+             JSCCanPerformOverviewScan: @{
+                     @"description": @"Can perform an overview scan (a quick scan for displaying a preview image).",
+                     @"see": JSCOverviewResolution
+                     },
+             JSCOverviewResolution: @{
+                     @"description": @"Resolution in DPI for overview scans.",
+                     @"see": JSCCanPerformOverviewScan
+                     },
+             JSCMeasurementUnit: @{
+                     @"description": @"The measurement unit (type of measurement) used for measurements.",
+                     @"see": JSCSupportedMeasurementUnits
+                     },
+             JSCSupportedMeasurementUnits: @{
+                     @"setter": JSCMeasurementUnit,
+                     @"description": @"A list of supported measurement units for this device.",
+                     },
+             JSCResolution: @{
+                     @"description": @"The resolution for scanning (in DPI).",
+                     @"see": JSCPreferredResolutions
+                     },
+             JSCPreferredResolutions: @{
+                     @"setter": JSCResolution,
+                     @"description": @"A list of resolutions that the device prefers for scanning.",
+                     },
+             JSCNativeXResolution: @{
+                     @"description": @"The native resolution of the scanner across the x axis.",
+                     @"see": JSCNativeYResolution
+                     },
+             JSCNativeYResolution: @{
+                     @"description": @"The native resolution of the scanner across the y axis.",
+                     @"see": JSCNativeXResolution
+                     },
+             JSCScanArea: @{
+                     @"description": @"The area to be scanned.",
+                     },
+             JSCScanAreaOrientation: @{
+                     @"description": @"Page orientation for the scan."
+                     },
+             JSCEvenPageOrientation: @{
+                     @"description": @"Page orientation for the scan for for even pages.",
+                     },
+             JSCOddPageOrientation: @{
+                     @"description": @"Page orientation for the scan for for odd pages.",
+                     },
+             JSCDocumentType: @{
+                     @"description": @"The document type to be scanned.",
+                     @"see": JSCSupportedDocumentTypes
+                     },
+             JSCSupportedDocumentTypes: @{
+                     @"setter": JSCDocumentType,
+                     @"description": @"A list of supported document types that can be scanned."
+                     },
+             JSCDocumentSize: @{
+                     @"description": @"The size of the document to be scanned."
+                     },
+             JSCScaleFactor: @{
+                     @"description": @"The scale (in percent) that the image is to be scanned at.",
+                     @"see": JSCPreferredScaleFactors
+                     },
+             JSCPreferredScaleFactors: @{
+                     @"setter": JSCScaleFactor,
+                     @"description": @"A list of preferred scale factors for the device."
+                     },
+             JSCBitDepth: @{
+                     @"description": @"The bit depth to scan at.",
+                     @"see": JSCSupportedBitDepths
+                     },
+             JSCSupportedBitDepths: @{
+                     @"setter": JSCBitDepth,
+                     @"description": @"A list of supported bit depths the device is capable of.",
+                     },
+             JSCPixelDataType: @{
+                     @"description": @"Pixel data type for the scan.",
+                     @"see": JSCSupportedPixelDataTypes
+                     },
+             JSCSupportedPixelDataTypes: @{
+                     @"setter": JSCPixelDataType,
+                     @"description": @"A list of supported pixel data types for the device."
+                     },
              JSCOptionCanUseBlackWhiteThreshold: @{
-                     @"setter": JSCOptionUseBlackWhiteThreshold,
+                     @"setter": JSCOptionThresholdForBlackAndWhiteScanning,
                      @"description": @"Convert images to black & white using a threshold value.",
                      @"see": JSCOptionDefaultBlackWhiteThreshold
-             },
+                     },
              JSCOptionDefaultBlackWhiteThreshold: @{
                      @"setter": JSCOptionThresholdForBlackAndWhiteScanning,
-                     @"description": @"A range from 0 to 255 for the black and white scanning conversion threshold.",
+                     @"description": @"A default value for the black and white scanning conversion threshold.",
                      @"see": JSCOptionCanUseBlackWhiteThreshold
-             }
-    };
+                     },
+             JSCOptionThresholdForBlackAndWhiteScanning: @{
+                     @"description": @"A value between 0 and 255 for the black and white scanning conversion threshold.",
+                     @"see": JSCOptionCanUseBlackWhiteThreshold
+                     }
+             
+             };
     
 }
 
@@ -388,6 +487,12 @@
 
     ICScannerPixelDataType pixelDataType = functionalUnit.pixelDataType;
     [readwrite setObject:[self getPixelDataTypeOptions:pixelDataType] forKey:JSCPixelDataType];
+
+    MutableOrderedDictionary * supportedPixelDataTypes = [[MutableOrderedDictionary alloc] init];
+    for (int i = 0; i <= 8; i++) {
+        [supportedPixelDataTypes addEntriesFromDictionary:[self getPixelDataTypeOptions:i]];
+    };
+    [readonly setObject:supportedPixelDataTypes forKey:JSCSupportedPixelDataTypes];
     
     [readwrite setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.scaleFactor)] forKey:JSCScaleFactor];
     
@@ -450,7 +555,7 @@
             [dfu.supportedDocumentTypes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
                 [supportedDocumentTypes addEntriesFromDictionary:[self getDocumentTypeOptions:idx]];
             }];
-            [readonly setObject:supportedDocumentTypes forKey:JSCDocumentType];
+            [readonly setObject:supportedDocumentTypes forKey:JSCSupportedDocumentTypes];
             
             ICEXIFOrientationType evenPageOrientation = dfu.evenPageOrientation;
             [readwrite setObject:[self getOrientationOptions:evenPageOrientation] forKey:JSCEvenPageOrientation];

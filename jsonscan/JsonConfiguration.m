@@ -461,15 +461,52 @@
     
     // JSCOverviewResolution
     
+    NSString * overviewResolution = [scannerOptions objectForKey:JSCOverviewResolution];
+    if (overviewResolution) {
+        // TODO: make sure this works properly!
+        functionalUnit.overviewResolution = (NSUInteger) overviewResolution.integerValue;
+    }
+    
     // JSCBitDepth
+    
+    NSString * bitDepth = [scannerOptions objectForKey:JSCBitDepth];
+    if (bitDepth) {
+        functionalUnit.bitDepth = bitDepth.intValue;
+    }
     
     // JSCMeasurementUnit
     
+    NSString * measurementUnit = [scannerOptions objectForKey:JSCMeasurementUnit];
+    if (measurementUnit) {
+        functionalUnit.measurementUnit = measurementUnit.intValue;
+    }
+    
     // JSCPixelDataType
+    
+    NSString * pixelDataType = [scannerOptions objectForKey:JSCPixelDataType];
+    if (pixelDataType) {
+        functionalUnit.pixelDataType = pixelDataType.intValue;
+    }
     
     // JSCScaleFactor
     
+    NSString * scaleFactor = [scannerOptions objectForKey:JSCScaleFactor];
+    if (scaleFactor) {
+        // TODO: make sure this works properly!
+        functionalUnit.scaleFactor = (NSUInteger) scaleFactor.integerValue;
+    }
+    
     // JSCScanArea
+    
+    NSDictionary * scanArea = [scannerOptions objectForKey:JSCScanArea];
+    if (scanArea) {
+        // TODO: make sure this works properly!
+        functionalUnit.scanArea = NSMakeRect ([[scanArea objectForKey:@"x"] intValue],
+                                              [[scanArea objectForKey:@"y"] intValue],
+                                              [[scanArea objectForKey:@"width"] intValue],
+                                              [[scanArea objectForKey:@"height"] intValue]
+                                              );
+    }
     
     // JSCScanAreaOrientation
     

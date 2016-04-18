@@ -440,11 +440,50 @@
         return;
     }
     
-    // TODO: Set the scanner options.
+    // JSCOptionUseBlackWhiteThreshold
     
-    if ([scannerOptions objectForKey:JSCOptionUseBlackWhiteThreshold]) {
-        functionalUnit.usesThresholdForBlackAndWhiteScanning = YES;
+    NSString * useBlackWhiteThreshold = [scannerOptions objectForKey:JSCOptionUseBlackWhiteThreshold];
+    if (useBlackWhiteThreshold) {
+        if ([useBlackWhiteThreshold isEqualToString:@"true"]) {
+            functionalUnit.usesThresholdForBlackAndWhiteScanning = YES;
+        } else if ([useBlackWhiteThreshold isEqualToString:@"false"]) {
+            functionalUnit.usesThresholdForBlackAndWhiteScanning = NO;
+        }
     }
+    
+    // JSCOptionThresholdForBlackAndWhiteScanning
+    
+    NSString * blackAndWhiteThreshold = [scannerOptions objectForKey:JSCOptionThresholdForBlackAndWhiteScanning];
+    if (blackAndWhiteThreshold) {
+        // TODO: make sure this works properly!
+        functionalUnit.thresholdForBlackAndWhiteScanning = (unsigned char) blackAndWhiteThreshold.intValue;
+    }
+    
+    // JSCOverviewResolution
+    
+    // JSCBitDepth
+    
+    // JSCMeasurementUnit
+    
+    // JSCPixelDataType
+    
+    // JSCScaleFactor
+    
+    // JSCScanArea
+    
+    // JSCScanAreaOrientation
+    
+    // JSCDocumentSize
+    
+    // JSCPhysicalSize
+    
+    // JSCResolution
+    
+    // JSCDocumentType
+    
+    // JSCEvenPageOrientation
+    
+    // JSCOddPageOrientation
     
     if (functionalUnit.type == ICScannerFunctionalUnitTypeDocumentFeeder) {
         

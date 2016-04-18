@@ -510,22 +510,44 @@
     
     // JSCScanAreaOrientation
     
-    // JSCDocumentSize
+    NSString * scanAreaOrientation = [scannerOptions objectForKey:JSCScanAreaOrientation];
+    if (scanAreaOrientation) {
+        functionalUnit.scanAreaOrientation = scanAreaOrientation.intValue;
+    }
     
-    // JSCPhysicalSize
     
     // JSCResolution
     
-    // JSCDocumentType
-    
-    // JSCEvenPageOrientation
-    
-    // JSCOddPageOrientation
+    NSString * resolution = [scannerOptions objectForKey:JSCResolution];
+    if (resolution) {
+        // TODO: make sure this works properly!
+        functionalUnit.resolution = (NSUInteger) resolution.integerValue;
+    }
     
     if (functionalUnit.type == ICScannerFunctionalUnitTypeDocumentFeeder) {
         
         ICScannerFunctionalUnitDocumentFeeder* dfu = (ICScannerFunctionalUnitDocumentFeeder*)functionalUnit;
         
+        // JSCDocumentType
+        
+        NSString * documentType = [scannerOptions objectForKey:JSCDocumentType];
+        if (documentType) {
+            dfu.documentType = documentType.intValue;
+        }
+        
+        // JSCEvenPageOrientation
+        
+        NSString * evenPageOrientation = [scannerOptions objectForKey:JSCEvenPageOrientation];
+        if (evenPageOrientation) {
+            dfu.evenPageOrientation = evenPageOrientation.intValue;
+        }
+        
+        // JSCOddPageOrientation
+        
+        NSString * oddPageOrientation = [scannerOptions objectForKey:JSCOddPageOrientation];
+        if (oddPageOrientation) {
+            dfu.oddPageOrientation = oddPageOrientation.intValue;
+        }
         
     }
     

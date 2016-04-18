@@ -268,18 +268,6 @@
             fu.scanArea         = NSMakeRect( 0.0, 0.0, s.width, s.height );
         }
         
-        // TODO: use _configuration
-        fu.resolution = 300;
-        
-        // TODO: use _configuration
-        if (true) {
-            fu.pixelDataType = ICScannerPixelDataTypeBW;
-            fu.bitDepth = ICScannerBitDepth1Bit;
-        } else {
-            fu.pixelDataType                = ICScannerPixelDataTypeRGB;
-            fu.bitDepth                     = ICScannerBitDepth8Bits;
-        }
-        
         scanner.transferMode            = ICScannerTransferModeFileBased;
         scanner.downloadsDirectory      = [NSURL fileURLWithPath:NSTemporaryDirectory()];
         scanner.documentName            = @"Scan";

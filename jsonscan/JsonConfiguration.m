@@ -449,6 +449,8 @@
         } else if ([useBlackWhiteThreshold isEqualToString:@"false"]) {
             functionalUnit.usesThresholdForBlackAndWhiteScanning = NO;
         }
+    } else {
+        functionalUnit.usesThresholdForBlackAndWhiteScanning = NO;
     }
     
     // JSCOptionThresholdForBlackAndWhiteScanning
@@ -472,6 +474,8 @@
     NSString * bitDepth = [scannerOptions objectForKey:JSCBitDepth];
     if (bitDepth) {
         functionalUnit.bitDepth = bitDepth.intValue;
+    } else {
+        functionalUnit.bitDepth = ICScannerBitDepth8Bits;
     }
     
     // JSCMeasurementUnit
@@ -486,6 +490,8 @@
     NSString * pixelDataType = [scannerOptions objectForKey:JSCPixelDataType];
     if (pixelDataType) {
         functionalUnit.pixelDataType = pixelDataType.intValue;
+    } else {
+        functionalUnit.pixelDataType = ICScannerPixelDataTypeRGB;
     }
     
     // JSCScaleFactor
@@ -522,6 +528,8 @@
     if (resolution) {
         // TODO: make sure this works properly!
         functionalUnit.resolution = (NSUInteger) resolution.integerValue;
+    } else {
+        functionalUnit.resolution = 300;
     }
     
     if (functionalUnit.type == ICScannerFunctionalUnitTypeDocumentFeeder) {
@@ -547,6 +555,19 @@
         NSString * oddPageOrientation = [scannerOptions objectForKey:JSCOddPageOrientation];
         if (oddPageOrientation) {
             dfu.oddPageOrientation = oddPageOrientation.intValue;
+        }
+        
+        // JSCIsDuplexScanningEnabled
+        
+        NSString * duplexScanningEnabled = [scannerOptions objectForKey:JSCIsDuplexScanningEnabled];
+        if (duplexScanningEnabled) {
+            if ([duplexScanningEnabled isEqualToString:@"true"]) {
+                dfu.duplexScanningEnabled = YES;
+            } else if ([duplexScanningEnabled isEqualToString:@"false"]) {
+                dfu.duplexScanningEnabled = NO;
+            }
+        } else {
+            dfu.duplexScanningEnabled = NO;
         }
         
     }

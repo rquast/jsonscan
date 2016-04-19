@@ -512,6 +512,26 @@
                                               [[scanArea objectForKey:@"width"] intValue],
                                               [[scanArea objectForKey:@"height"] intValue]
                                               );
+    } else {
+        
+        if ( functionalUnit.type != ICScannerFunctionalUnitTypeDocumentFeeder ) {
+            
+            NSSize s;
+            
+            functionalUnit.measurementUnit  = ICScannerMeasurementUnitInches;
+            
+            if ( functionalUnit.type == ICScannerFunctionalUnitTypeFlatbed ) {
+                s = ((ICScannerFunctionalUnitFlatbed*)functionalUnit).physicalSize;
+            } else if ( functionalUnit.type == ICScannerFunctionalUnitTypePositiveTransparency ) {
+                s = ((ICScannerFunctionalUnitPositiveTransparency*)functionalUnit).physicalSize;
+            } else {
+                s = ((ICScannerFunctionalUnitNegativeTransparency*)functionalUnit).physicalSize;
+            }
+            
+            functionalUnit.scanArea = NSMakeRect(0.0, 0.0, s.width, s.height);
+            
+        }
+        
     }
     
     // JSCScanAreaOrientation

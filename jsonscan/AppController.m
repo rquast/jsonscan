@@ -244,34 +244,12 @@
     
     [mConfiguration setScannerOptions:[mConfiguration.action objectForKey:@"settings"] functionalUnit:fu];
     
-    if ( ( fu.scanInProgress == NO ) && ( fu.overviewScanInProgress == NO ) )
-    {
-        if ( fu.type == ICScannerFunctionalUnitTypeDocumentFeeder )
-        {
-            // ICScannerFunctionalUnitDocumentFeeder* dfu = (ICScannerFunctionalUnitDocumentFeeder*)fu;
-            
-            // TODO: set the following options via json
-            // dfu.documentType = (configuration.config[ScanlineConfigOptionLegal]) ? ICScannerDocumentTypeUSLegal : ICScannerDocumentTypeUSLetter;
-            // dfu.duplexScanningEnabled = (BOOL)configuration.config[ScanlineConfigOptionDuplex];
-        }
-        else
-        {
-            NSSize s;
-            
-            fu.measurementUnit  = ICScannerMeasurementUnitInches;
-            if ( fu.type == ICScannerFunctionalUnitTypeFlatbed )
-                s = ((ICScannerFunctionalUnitFlatbed*)fu).physicalSize;
-            else if ( fu.type == ICScannerFunctionalUnitTypePositiveTransparency )
-                s = ((ICScannerFunctionalUnitPositiveTransparency*)fu).physicalSize;
-            else
-                s = ((ICScannerFunctionalUnitNegativeTransparency*)fu).physicalSize;
-            fu.scanArea         = NSMakeRect( 0.0, 0.0, s.width, s.height );
-        }
+    if ( ( fu.scanInProgress == NO ) && ( fu.overviewScanInProgress == NO ) ) {
         
-        scanner.transferMode            = ICScannerTransferModeFileBased;
-        scanner.downloadsDirectory      = [NSURL fileURLWithPath:NSTemporaryDirectory()];
-        scanner.documentName            = @"Scan";
-        scanner.documentUTI             = (id)kUTTypePNG;
+        scanner.transferMode = ICScannerTransferModeFileBased;
+        scanner.downloadsDirectory = [NSURL fileURLWithPath:NSTemporaryDirectory()];
+        scanner.documentName = @"Scan";
+        scanner.documentUTI = (id)kUTTypePNG;
         
         [scanner requestScan];
         
@@ -280,6 +258,7 @@
         [scanner cancelScan];
         
     }
+    
 }
 
 @end

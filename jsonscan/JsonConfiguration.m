@@ -140,7 +140,7 @@
     _action = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
     
     if (_action == nil) {
-        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+        NSLog(@"{\"response\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
     }
     
 }
@@ -605,7 +605,7 @@
 
     [readonly setObject:[self getBoolString: functionalUnit.acceptsThresholdForBlackAndWhiteScanning] forKey:JSCOptionCanUseBlackWhiteThreshold];
     
-    [readonly setObject:[self getBoolString: functionalUnit.usesThresholdForBlackAndWhiteScanning] forKey:JSCOptionUseBlackWhiteThreshold];
+    [readwrite setObject:[self getBoolString: functionalUnit.usesThresholdForBlackAndWhiteScanning] forKey:JSCOptionUseBlackWhiteThreshold];
     
     [readonly setObject:[NSString stringWithFormat:@"%@", @(functionalUnit.defaultThresholdForBlackAndWhiteScanning)] forKey:JSCOptionDefaultBlackWhiteThreshold];
     

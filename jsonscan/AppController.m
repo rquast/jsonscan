@@ -32,7 +32,7 @@
 
 - (void)noDevicesFound:(NSTimer*)theTimer
 {
-    NSLog(@"{\"repsonse\": \"status\", \"message\": \"No scanners found.\"}");
+    NSLog(@"{\"response\": \"status\", \"message\": \"No scanners found.\"}");
     [self exit];
 }
 
@@ -53,13 +53,13 @@
         [mScanners addObject:addedDevice];
         addedDevice.delegate = self;
         if ([mConfiguration.action[@"action"] isEqualToString:@"list"]) {
-            NSLog(@"{\"repsonse\": \"found\", \"name\": \"%@\"}", [addedDevice name]);
+            NSLog(@"{\"response\": \"found\", \"name\": \"%@\"}", [addedDevice name]);
         }
     }
     
     if (!moreComing) {
         if ([mConfiguration.action[@"action"] isEqualToString:@"list"]) {
-            NSLog(@"{\"repsonse\": \"status\", \"message\": \"All devices have been listed.\"}");
+            NSLog(@"{\"response\": \"status\", \"message\": \"All devices have been listed.\"}");
         }
         [self openCloseSession:nil];
     }
@@ -98,24 +98,24 @@
 
 - (void)didRemoveDevice:(ICDevice*)removedDevice
 {
-    NSLog(@"{\"repsonse\": \"status\", \"message\": \"Removed: %@\"}", [removedDevice name]);
+    NSLog(@"{\"response\": \"status\", \"message\": \"Removed: %@\"}", [removedDevice name]);
 }
 
 - (void)deviceDidBecomeReady:(ICScannerDevice*)scanner
 {
-    NSLog(@"{\"repsonse\": \"status\", \"message\": \"Scanner Ready: %@\"}", [scanner name]);
+    NSLog(@"{\"response\": \"status\", \"message\": \"Scanner Ready: %@\"}", [scanner name]);
 }
 
 - (void)device:(ICDevice*)device didCloseSessionWithError:(NSError*)error
 {
     if (error != nil) {
-        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+        NSLog(@"{\"response\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
     }
 }
 
 - (void)deviceDidChangeName:(ICDevice*)device;
 {
-    NSLog(@"{\"repsonse\": \"status\", \"message\": \"Changed Name: %@\"}", [device name]);
+    NSLog(@"{\"response\": \"status\", \"message\": \"Changed Name: %@\"}", [device name]);
 }
 
 - (void)deviceDidChangeSharingState:(ICDevice*)device
@@ -125,15 +125,15 @@
 - (void)device:(ICDevice*)device didReceiveStatusInformation:(NSDictionary*)status
 {
     if ( [[status objectForKey:ICStatusNotificationKey] isEqualToString:ICScannerStatusWarmingUp] ) {
-        NSLog(@"{\"repsonse\": \"status\", \"message\": \"Scanner warming up...\"}");
+        NSLog(@"{\"response\": \"status\", \"message\": \"Scanner warming up...\"}");
     } else if ( [[status objectForKey:ICStatusNotificationKey] isEqualToString:ICScannerStatusWarmUpDone] ) {
-        NSLog(@"{\"repsonse\": \"status\", \"message\": \"Scanner done warming up.\"}");
+        NSLog(@"{\"response\": \"status\", \"message\": \"Scanner done warming up.\"}");
     }
 }
 
 - (void)device:(ICDevice*)device didEncounterError:(NSError*)error
 {
-    NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+    NSLog(@"{\"response\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
     [self exit];
 }
 
@@ -174,7 +174,7 @@
 {
     
     if (error != nil) {
-        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+        NSLog(@"{\"response\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
     }
     
     [self exit];
@@ -185,7 +185,7 @@
 {
 
     if (error != nil) {
-        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+        NSLog(@"{\"response\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
     }
     
     [self exit];
@@ -203,7 +203,7 @@
 - (void)device:(ICDevice*)device didOpenSessionWithError:(NSError*)error
 {
     if (error != nil) {
-        NSLog(@"{\"repsonse\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
+        NSLog(@"{\"response\": \"error\", \"message\": \"%@\"}", [error localizedDescription]);
     }
 }
 
@@ -214,7 +214,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString* destinationFile = [NSString stringWithFormat:@"%@/Desktop/scan_%@.png", NSHomeDirectory(), timestamp];
     [fm copyItemAtURL:url toURL:[NSURL fileURLWithPath:destinationFile] error:nil];
-    NSLog(@"{\"repsonse\": \"status\", \"message\": \"Page scanned.\", \"file\": \"%@\"}", destinationFile);
+    NSLog(@"{\"response\": \"status\", \"message\": \"Page scanned.\", \"file\": \"%@\"}", destinationFile);
     
 }
 

@@ -594,7 +594,7 @@
     
 }
 
-- (MutableOrderedDictionary*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit
+- (MutableOrderedDictionary*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit scannerName:(NSString*)scannerName
 {
     
     // TODO: functionalUnit.overviewImage
@@ -707,6 +707,7 @@
     }
     
     [d setObject:@"settings" forKey:@"response"];
+    [d setObject:scannerName forKey:@"name"];
     [d setObject:readonly forKey:@"read-only-settings"];
     [d setObject:readwrite forKey:@"read-write-settings"];
     

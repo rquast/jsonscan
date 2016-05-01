@@ -41,7 +41,7 @@ static NSString * const JSCOddPageOrientation = @"odd-page-orientation";
 
 - (void)parseJSON:(NSString*)jsonString;
 - (NSString*)serializeJSON:(NSDictionary*)dictionary;
-- (MutableOrderedDictionary*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit;
+- (MutableOrderedDictionary*)getScannerOptions:(ICScannerFunctionalUnit*)functionalUnit scannerName:(NSString*)scannerName;
 - (void)setScannerOptions:(NSDictionary*)scannerOptions functionalUnit:(ICScannerFunctionalUnit*)functionalUnit;
 - (NSDictionary*)getSizeOptions:(NSSize*)size;
 + (NSDictionary*)getOptions;

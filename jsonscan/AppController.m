@@ -242,7 +242,7 @@
     ICScannerDevice * scanner = [self selectedScanner];
     ICScannerFunctionalUnit * fu = scanner.selectedFunctionalUnit;
     
-    [mConfiguration setScannerOptions:[mConfiguration.action objectForKey:@"settings"] functionalUnit:fu];
+    [mConfiguration setScannerOptions:mConfiguration.action functionalUnit:fu];
     
     if ( ( fu.scanInProgress == NO ) && ( fu.overviewScanInProgress == NO ) ) {
         

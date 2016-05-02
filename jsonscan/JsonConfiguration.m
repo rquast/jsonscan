@@ -442,7 +442,7 @@
     
     // JSCOptionUseBlackWhiteThreshold
     
-    NSString * useBlackWhiteThreshold = [scannerOptions objectForKey:JSCOptionUseBlackWhiteThreshold];
+    NSString * useBlackWhiteThreshold = (NSString*) [scannerOptions objectForKey:JSCOptionUseBlackWhiteThreshold];
     if (useBlackWhiteThreshold) {
         if ([useBlackWhiteThreshold isEqualToString:@"true"]) {
             functionalUnit.usesThresholdForBlackAndWhiteScanning = YES;
@@ -455,7 +455,7 @@
     
     // JSCOptionThresholdForBlackAndWhiteScanning
     
-    NSString * blackAndWhiteThreshold = [scannerOptions objectForKey:JSCOptionThresholdForBlackAndWhiteScanning];
+    NSString * blackAndWhiteThreshold = (NSString*) [scannerOptions objectForKey:JSCOptionThresholdForBlackAndWhiteScanning];
     if (blackAndWhiteThreshold) {
         // TODO: make sure this works properly!
         functionalUnit.thresholdForBlackAndWhiteScanning = (unsigned char) blackAndWhiteThreshold.intValue;
@@ -463,7 +463,7 @@
     
     // JSCOverviewResolution
     
-    NSString * overviewResolution = [scannerOptions objectForKey:JSCOverviewResolution];
+    NSString * overviewResolution = (NSString*) [scannerOptions objectForKey:JSCOverviewResolution];
     if (overviewResolution) {
         // TODO: make sure this works properly!
         functionalUnit.overviewResolution = (NSUInteger) overviewResolution.integerValue;
@@ -471,7 +471,7 @@
     
     // JSCBitDepth
     
-    NSString * bitDepth = [scannerOptions objectForKey:JSCBitDepth];
+    NSString * bitDepth = (NSString*) [scannerOptions objectForKey:JSCBitDepth];
     if (bitDepth) {
         functionalUnit.bitDepth = bitDepth.intValue;
     } else {
@@ -480,14 +480,14 @@
     
     // JSCMeasurementUnit
     
-    NSString * measurementUnit = [scannerOptions objectForKey:JSCMeasurementUnit];
+    NSString * measurementUnit = (NSString*) [scannerOptions objectForKey:JSCMeasurementUnit];
     if (measurementUnit) {
         functionalUnit.measurementUnit = measurementUnit.intValue;
     }
     
     // JSCPixelDataType
     
-    NSString * pixelDataType = [scannerOptions objectForKey:JSCPixelDataType];
+    NSString * pixelDataType = (NSString*) [scannerOptions objectForKey:JSCPixelDataType];
     if (pixelDataType) {
         functionalUnit.pixelDataType = pixelDataType.intValue;
     } else {
@@ -496,7 +496,7 @@
     
     // JSCScaleFactor
     
-    NSString * scaleFactor = [scannerOptions objectForKey:JSCScaleFactor];
+    NSString * scaleFactor = (NSString*) [scannerOptions objectForKey:JSCScaleFactor];
     if (scaleFactor) {
         // TODO: make sure this works properly!
         functionalUnit.scaleFactor = (NSUInteger) scaleFactor.integerValue;
@@ -504,13 +504,13 @@
     
     // JSCScanArea
     
-    NSDictionary * scanArea = [scannerOptions objectForKey:JSCScanArea];
+    NSDictionary * scanArea = (NSDictionary*) [scannerOptions objectForKey:JSCScanArea];
     if (scanArea) {
         // TODO: make sure this works properly!
-        functionalUnit.scanArea = NSMakeRect ([[scanArea objectForKey:@"x"] intValue],
-                                              [[scanArea objectForKey:@"y"] intValue],
-                                              [[scanArea objectForKey:@"width"] intValue],
-                                              [[scanArea objectForKey:@"height"] intValue]
+        functionalUnit.scanArea = NSMakeRect ([(NSString*)[scanArea objectForKey:@"x"] intValue],
+                                              [(NSString*)[scanArea objectForKey:@"y"] intValue],
+                                              [(NSString*)[scanArea objectForKey:@"width"] intValue],
+                                              [(NSString*)[scanArea objectForKey:@"height"] intValue]
                                               );
     } else {
         
@@ -536,7 +536,7 @@
     
     // JSCScanAreaOrientation
     
-    NSString * scanAreaOrientation = [scannerOptions objectForKey:JSCScanAreaOrientation];
+    NSString * scanAreaOrientation = (NSString*) [scannerOptions objectForKey:JSCScanAreaOrientation];
     if (scanAreaOrientation) {
         functionalUnit.scanAreaOrientation = scanAreaOrientation.intValue;
     }
@@ -544,7 +544,7 @@
     
     // JSCResolution
     
-    NSString * resolution = [scannerOptions objectForKey:JSCResolution];
+    NSString * resolution = (NSString*) [scannerOptions objectForKey:JSCResolution];
     if (resolution) {
         // TODO: make sure this works properly!
         functionalUnit.resolution = (NSUInteger) resolution.integerValue;
@@ -558,28 +558,28 @@
         
         // JSCDocumentType
         
-        NSString * documentType = [scannerOptions objectForKey:JSCDocumentType];
+        NSString * documentType = (NSString*) [scannerOptions objectForKey:JSCDocumentType];
         if (documentType) {
             dfu.documentType = documentType.intValue;
         }
         
         // JSCEvenPageOrientation
         
-        NSString * evenPageOrientation = [scannerOptions objectForKey:JSCEvenPageOrientation];
+        NSString * evenPageOrientation = (NSString*) [scannerOptions objectForKey:JSCEvenPageOrientation];
         if (evenPageOrientation) {
             dfu.evenPageOrientation = evenPageOrientation.intValue;
         }
         
         // JSCOddPageOrientation
         
-        NSString * oddPageOrientation = [scannerOptions objectForKey:JSCOddPageOrientation];
+        NSString * oddPageOrientation = (NSString*) [scannerOptions objectForKey:JSCOddPageOrientation];
         if (oddPageOrientation) {
             dfu.oddPageOrientation = oddPageOrientation.intValue;
         }
         
         // JSCIsDuplexScanningEnabled
         
-        NSString * duplexScanningEnabled = [scannerOptions objectForKey:JSCIsDuplexScanningEnabled];
+        NSString * duplexScanningEnabled = (NSString*) [scannerOptions objectForKey:JSCIsDuplexScanningEnabled];
         if (duplexScanningEnabled) {
             if ([duplexScanningEnabled isEqualToString:@"true"]) {
                 dfu.duplexScanningEnabled = YES;

@@ -214,7 +214,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString* destinationFile = [NSString stringWithFormat:@"%@/Desktop/scan_%@.png", NSHomeDirectory(), timestamp];
     [fm copyItemAtURL:url toURL:[NSURL fileURLWithPath:destinationFile] error:nil];
-    NSLog(@"{\"response\": \"status\", \"message\": \"Page scanned.\", \"file\": \"%@\"}", destinationFile);
+    NSLog(@"{\"response\": \"acquired\", \"file\": \"%@\"}", destinationFile);
     
 }
 

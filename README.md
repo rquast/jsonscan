@@ -2,64 +2,81 @@
 
 A command line scanning client for Mac OS X 10.10 and higher.
 
-The purpose of JSONScan is to make it easy for languages, other than objective-c or swift, to use ImageKit, without a cocoa bridge or native bindings. It allows you to communicate with a scanner using JSON through stdin/stdout.
+The purpose of JSONScan is to make it easy for languages, other than objective-c or swift, to use ImageKit, without a cocoa bridge or native bindings. It allows you to communicate with a scanner using JSON through stdin/stdout. It is used in production for the Mac version of [FormReturn OMR Software](https://www.formreturn.com), which was written in Java.
 
 ## Acknowledgements
 
-JSONScan is a fork of [scanline](https://github.com/klep/scanline).
+JSONScan is a rewrite of [scanline](https://github.com/klep/scanline).
 
 [OrderedDictionary](https://github.com/nicklockwood/OrderedDictionary) is used for the JSON output, to get around the abscence of ordered key-value list classes in Cocoa/ObjC.
 
+## Contributing
+
+Contributions are welcome. Please only submit contribution by forking the project and creating a pull request.
+
 ## Usage
 
-Listing Scanners & Settings:
+JSONScan can be used from the command line or an application. It is ideal for use with classes such as Java's ProcessBuilder and Gson.
+
+### Scanning using default settings without JSON
 
 ```
-./jsonscan
+./jsonscan -s
 ```
 
-An example output from listing the scanners:
+### Querying Scanners & Settings
 
 ```
-{"repsonse": "found", "name": "EPSON GT-S50"}
-{"repsonse": "status", "message": "All devices have been listed."}
-{"repsonse": "status", "message": "Scanner Ready: EPSON GT-S50"}
+./jsonscan -l
+```
+
+Example output:
+
+```
+{"response": "found", "name": "Primera Trio"}
+{"response": "status", "message": "All devices have been listed."}
+{"response": "status", "message": "Scanner Ready: Primera Trio"}
 {
   "response" : "settings",
+  "name" : "Primera Trio",
   "read-only-settings" : {
     "can-use-black-white-threshold" : "true",
-    "use-back-white-threshold" : "false",
-    "default-black-and-white-threshold" : "128",
+    "default-black-and-white-threshold" : "127",
     "can-perform-overview-scan" : "false",
-    "native-x-resolution" : "600",
-    "native-y-resolution" : "600",
+    "native-x-resolution" : "300",
+    "native-y-resolution" : "300",
+    "supported-pixel-data-types" : {
+      "0" : "Black and White",
+      "1" : "Grayscale",
+      "2" : "RGB",
+      "3" : "Indexed",
+      "4" : "CMY",
+      "5" : "CMYK",
+      "6" : "YUV",
+      "7" : "YUVK",
+      "8" : "CIEXYZ"
+    },
     "supported-bit-depths" : {
       "1" : "1 Bit",
       "8" : "8 Bits"
     },
     "preferred-resolutions" : {
-      "50" : "50 DPI",
-      "72" : "72 DPI",
-      "96" : "96 DPI",
+      "75" : "75 DPI",
+      "100" : "100 DPI",
       "150" : "150 DPI",
       "200" : "200 DPI",
-      "240" : "240 DPI",
-      "266" : "266 DPI",
       "300" : "300 DPI",
-      "350" : "350 DPI",
-      "360" : "360 DPI",
-      "400" : "400 DPI",
-      "600" : "600 DPI",
-      "720" : "720 DPI",
-      "800" : "800 DPI",
-      "1200" : "1200 DPI",
-      "1600" : "1600 DPI",
-      "2400" : "2400 DPI",
-      "3200" : "3200 DPI",
-      "4800" : "4800 DPI",
-      "6400" : "6400 DPI"
+      "600" : "600 DPI"
     },
     "preferred-scale-factors" : {
+      "50" : "50%",
+      "70" : "70%",
+      "78" : "78%",
+      "83" : "83%",
+      "85" : "85%",
+      "91" : "91%",
+      "94" : "94%",
+      "97" : "97%",
       "100" : "100%"
     },
     "supported-measurement-units" : {
@@ -67,7 +84,7 @@ An example output from listing the scanners:
       "1" : "Centimeters",
       "5" : "Pixels"
     },
-    "is-document-loaded" : "true",
+    "is-document-loaded" : "false",
     "document-size" : {
       "width" : "21",
       "height" : "29.7"
@@ -77,28 +94,27 @@ An example output from listing the scanners:
       "height" : "35.56"
     },
     "is-reverse-feeder-page-order" : "false",
-    "supports-duplex-scanning" : "true",
+    "supports-duplex-scanning" : "false",
     "supported-document-types" : {
       "1" : "A4",
-      "2" : "B5",
       "3" : "US Letter",
       "4" : "US Legal",
-      "5" : "A5",
       "13" : "A6",
       "62" : "4R"
     }
   },
   "read-write-settings" : {
-    "threshold-for-black-and-white-scanning" : "128",
+    "use-back-white-threshold" : "false",
+    "threshold-for-black-and-white-scanning" : "127",
     "bit-depth" : {
-      "1" : "1 Bit"
+      "8" : "8 Bits"
     },
     "measurement-unit" : {
       "1" : "Centimeters"
     },
     "overview-resolution" : "300",
     "pixel-data-type" : {
-      "0" : "Black and White"
+      "2" : "RGB"
     },
     "scale-factor" : "100",
     "scan-area" : {
@@ -125,22 +141,25 @@ An example output from listing the scanners:
 }
 ```
 
-Performing a scan with the default scanner:
-
-```
-./jsonscan -s
-```
-
 Performing a scan with custom settings:
 
 ```
 ./jsonscan -c < settings.json
 ```
 
-settings.json example:
+Using read-write-settings, and device-name for settings.json looks like:
 
 ```
-TODO
+{
+    "device-name": "Primera Trio",
+    "base-directory": "/tmp",
+    "output-file-type": "png",
+    "resolution": "300",
+    "is-duplex-scanning-enabled": "false",
+    "use-back-white-threshold": "false",
+    "threshold-for-black-and-white-scanning": "128",
+    "document-type": "A4",
+    "pixel-data-type": "0"
+}
 ```
 
-## It is a work in progress.

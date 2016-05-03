@@ -4,6 +4,10 @@ A command line scanning client for Mac OS X 10.10 and higher.
 
 The purpose of JSONScan is to make it easy for languages, other than objective-c or swift, to use ImageKit, without a cocoa bridge or native bindings. It allows you to communicate with a scanner using JSON through stdin/stdout. It is used in production for the Mac version of [FormReturn OMR Software](https://www.formreturn.com), which was written in Java.
 
+## Compiled Executable
+
+Available here: [https://github.com/rquast/jsonscan/blob/master/jsonscan.zip?raw=true](https://github.com/rquast/jsonscan/blob/master/jsonscan.zip?raw=true)
+
 ## Acknowledgements
 
 JSONScan is a rewrite of [scanline](https://github.com/klep/scanline).

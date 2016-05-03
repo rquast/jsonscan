@@ -141,13 +141,13 @@ Example output:
 }
 ```
 
-Performing a scan with custom settings:
+### Performing a scan with custom settings
 
 ```
 ./jsonscan -c < settings.json
 ```
 
-Using read-write-settings, and device-name for settings.json looks like:
+settings.json example:
 
 ```
 {
@@ -163,3 +163,6 @@ Using read-write-settings, and device-name for settings.json looks like:
 }
 ```
 
+## License
+
+MIT for all files except OrderedDictionary which is Zlib licensed.

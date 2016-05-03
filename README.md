@@ -163,6 +163,11 @@ settings.json example:
 }
 ```
 
+## Roadmap
+
+- Add support for page-load scan events (wait for the scanner to have a page loaded then perform scan).
+- Add support for scan progress indication.
+
 ## License
 
 MIT for all files except OrderedDictionary which is Zlib licensed.

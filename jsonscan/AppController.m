@@ -212,7 +212,21 @@
     
     NSString *timestamp = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSString* destinationFile = [NSString stringWithFormat:@"%@/Desktop/scan_%@.png", NSHomeDirectory(), timestamp];
+
+    NSString * outputFileType = (NSString*) [mConfiguration.action objectForKey:@"output-file-type"];
+    
+    if (!outputFileType) {
+        outputFileType = @"png";
+    }
+    
+    NSString * baseDirectory = (NSString*) [mConfiguration.action objectForKey:@"base-directory"];
+    
+    NSString* destinationFile;
+    if (!baseDirectory) {
+        destinationFile = [NSString stringWithFormat:@"%@/Desktop/scan_%@.%@", NSHomeDirectory(), timestamp, outputFileType];
+    } else {
+        destinationFile = [NSString stringWithFormat:@"%@/scan_%@.%@", baseDirectory, timestamp, outputFileType];
+    }
     [fm copyItemAtURL:url toURL:[NSURL fileURLWithPath:destinationFile] error:nil];
     NSLog(@"{\"response\": \"acquired\", \"file\": \"%@\"}", destinationFile);
     
@@ -249,7 +263,19 @@
         scanner.transferMode = ICScannerTransferModeFileBased;
         scanner.downloadsDirectory = [NSURL fileURLWithPath:NSTemporaryDirectory()];
         scanner.documentName = @"Scan";
-        scanner.documentUTI = (id)kUTTypePNG;
+        
+        NSString * outputFileType = (NSString*) [mConfiguration.action objectForKey:@"output-file-type"];
+        if ([outputFileType isEqualToString:@"png"]) {
+            scanner.documentUTI = (id)kUTTypePNG;
+        } else if ([outputFileType isEqualToString:@"jpg"]) {
+            scanner.documentUTI = (id)kUTTypeJPEG;
+        } else if ([outputFileType isEqualToString:@"tiff"]) {
+            scanner.documentUTI = (id)kUTTypeTIFF;
+        } else if ([outputFileType isEqualToString:@"pdf"]) {
+            scanner.documentUTI = (id)kUTTypePDF;
+        } else {
+            scanner.documentUTI = (id)kUTTypePNG;
+        }
         
         [scanner requestScan];
         
